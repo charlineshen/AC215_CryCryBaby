@@ -1,4 +1,4 @@
-AC215-Template (Milestone2)
+AC215-Milestone2
 ==============================
 
 AC215 - Milestone2
@@ -16,20 +16,21 @@ Project Organization
             │   ├── Dockerfile
             │   ├── preprocess.py
             │   └── requirements.txt
-            └── validation
-                  ├── Dockerfile
-                  ├── cv_val.py
-                  └── requirements.txt
+            └── xxxxxx
+                  ├── xxxxxx
+                  ├── xxxxxx
+                  └── xxxxxx
 
 
 --------
-# AC215 - Milestone2 - ButterFlyer
+# AC215 - Milestone2 - Cry Cry Baby
 
 **Team Members**
-Pavlov Protovief, Paolo Primopadre and Pablo El Padron
+Jessica Gochioco, Jingwen Zhang, Adam Stone, Charline Shen
+
 
 **Group Name**
-Awesome Group
+Cry Cry Baby
 
 **Project**
 In this project we aim to develop an application that can identify various species of butterflies in the wild using computer vision and offer educational content through a chatbot interface.
