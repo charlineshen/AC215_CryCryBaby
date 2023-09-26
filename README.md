@@ -55,6 +55,8 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 (5) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
 **Mock Submission**
+
+
 ***To open the container:***
 0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
 1. [Login GCP, select ac215-project-400018, start the VM instance] 
