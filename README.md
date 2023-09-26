@@ -7,10 +7,7 @@ Project Organization
 ------------
       ├── LICENSE
       ├── README.md
-      ├── notebooks
-      ├── references
       ├── requirements.txt
-      ├── setup.py
       └── src
             ├── preprocessing
             │   ├── Dockerfile
@@ -49,8 +46,6 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 - Output from this container stored at GCS location
 
 (1) `src/preprocessing/cli.py`  - Here we first convert our audio files into numerical representation called spectrogram, and then normalize each matrices. Now we have matrices ready for model saved on GCS. 
-
-(2) [TO BE UPDATED] `src/preprocessing/requirements.txt` - We used following packages to help us preprocess here - `special butterfly package` 
 
 (3) `src/preprocessing/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
 
