@@ -14,7 +14,10 @@ Project Organization
       └── src
             ├── preprocessing
             │   ├── Dockerfile
-            │   ├── preprocess.py
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   ├── cli.py
             │   └── requirements.txt
             └── xxxxxx
                   ├── xxxxxx
@@ -33,40 +36,35 @@ Jessica Gochioco, Jingwen Zhang, Adam Stone, Charline Shen
 Cry Cry Baby
 
 **Project**
-In this project we aim to develop an application that can identify various species of butterflies in the wild using computer vision and offer educational content through a chatbot interface.
+Parenting is a rewarding yet challenging journey that millions of individuals embark on each year. One of the most difficult aspects of caring for a baby is understanding and addressing their needs, especially when they have not yet learned how to talk. Our project centers on the application of the Dunstan Baby Language (DBL) , a concept suggesting that infants possess distinct vocal cues for various needs, and the development of a mobile app that leverages this knowledge. This app aims to empower parents by enabling them to decode their baby's cries and respond effectively, thereby reducing the stress associated with early parenthood. Furthermore, our project envisions a feature to have caretakers self-identify cries in order to add to our dataset, as well as the integration of a chatbot that can offer real-time support and guidance to parents.
+
 
 ### Milestone2 ###
+Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/gveres/donateacry-corpus/tree/master, cleaned and updated version). We parked our dataset in a private Google Cloud Bucket. 
 
-We gathered dataset of 1M butterflies representing 17K species. Our dataset comes from following sources - (1),(2),(3) with approx 100GB in size. We parked our dataset in a private Google Cloud Bucket. 
 
 **Preprocess container**
-- This container reads 100GB of data and resizes the image sizes and stores it back to GCP
-- Input to this container is source and destincation GCS location, parameters for resizing, secrets needed - via docker
+- This container reads all the audio files (in .wav format), translate them into spectrogram (in .txt format), and stores it back to GCP
+- Source and destincation GCS location are preset in cli.py. Input to this container is secrets files - via docker
 - Output from this container stored at GCS location
 
-(1) `src/preprocessing/preprocess.py`  - Here we do preprocessing on our dataset of 100GB, we reduce the image sizes (a parameter that can be changed later) to 128x128 for faster iteration with our process. Now we have dataset at 10GB and saved on GCS. 
+(1) `src/preprocessing/cli.py`  - Here we first convert our audio files into numerical representation called spectrogram, and then normalize each matrices. Now we have matrices ready for model saved on GCS. 
 
-(2) `src/preprocessing/requirements.txt` - We used following packages to help us preprocess here - `special butterfly package` 
+(2) [TO BE UPDATED] `src/preprocessing/requirements.txt` - We used following packages to help us preprocess here - `special butterfly package` 
 
-(3) `src/preprocessing/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets (not to be stored on GitHub) to connect to GCS.
+(3) `src/preprocessing/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
 
-To run Dockerfile - `Instructions here`
+(4) `src/preprocessing/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
 
-**Cross validation, Data Versioning**
-- This container reads preprocessed dataset and creates validation split and uses dvc for versioning.
-- Input to this container is source GCS location, parameters if any, secrets needed - via docker
-- Output is flat file with cross validation splits
-  
-(1) `src/validation/cv_val.py` - Since our dataset is quite large we decided to stratify based on species and kept 80% for training and 20% for validation. Our metrics will be monitored on this 20% validation set. 
+(5) `src/preprocessing/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
 
-(2) `requirements.txt` - We used following packages to help us with cross validation here - `iterative-stratification` 
+(6) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-(3) `src/validation/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets (not to be stored on GitHub) to connect to GCS.
+To run Dockerfile - run docker-shell.sh
 
-To run Dockerfile - `Instructions here`
+**Container 2**
+TO BE UPDATED
 
 **Notebooks** 
-This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations. 
+ To BE UPDATED (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations.)
 
-----
-You may adjust this template as appropriate for your project.
