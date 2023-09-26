@@ -14,8 +14,7 @@ Project Organization
             │   ├── Pipfile
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
-            │   ├── cli.py
-            │   └── requirements.txt
+            │   └── cli.py
             └── xxxxxx
                   ├── xxxxxx
                   ├── xxxxxx
