@@ -54,7 +54,7 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 
 (5) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-*** To open the container: ***
+***To open the container:***
 1. [Login GCP, select ac215-project-400018, start the VM instance] 
 1. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
 2. Run `docker-shell.sh` using command: sudo sh docker-shell.sh
