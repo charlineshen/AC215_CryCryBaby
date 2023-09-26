@@ -54,11 +54,15 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 
 (5) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
+**Mock Submission**
 ***To open the container:***
+0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
 1. [Login GCP, select ac215-project-400018, start the VM instance] 
-1. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
-2. Run `docker-shell.sh` using command: sudo sh docker-shell.sh
-3. Inside the container, run preprocessing using command: python cli.py
+2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
+3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
+4. Inside the container, run preprocessing using command: `python cli.py`
+5. `cli.py` would download audio files from GCP bucket, transform audio files into spectrograms(matrices in .txt files), and then upload the processed files to GCP bucket. You could observe the updates in Cloud Storage - Buckets in your GCP project.
+6. Stop VM instance!
 
 **Container 2**
 TO BE UPDATED
