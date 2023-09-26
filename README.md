@@ -46,15 +46,19 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 
 (1) `src/preprocessing/cli.py`  - Here we first convert our audio files into numerical representation called spectrogram, and then normalize each matrices. Now we have matrices ready for model saved on GCS. 
 
-(3) `src/preprocessing/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
+(2) `src/preprocessing/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
 
-(4) `src/preprocessing/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
+(3) `src/preprocessing/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
 
-(5) `src/preprocessing/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
+(4) `src/preprocessing/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
 
-(6) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
+(5) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-To run Dockerfile - run docker-shell.sh
+*** To open the container: ***
+1. [Login GCP, select ac215-project-400018, start the VM instance] 
+1. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
+2. Run `docker-shell.sh` using command: sudo sh docker-shell.sh
+3. Inside the container, run preprocessing using command: python cli.py
 
 **Container 2**
 TO BE UPDATED
