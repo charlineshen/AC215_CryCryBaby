@@ -1,0 +1,5 @@
+# TO BE UPDATED
+
+librosa
+matplotlib
+pipenv
