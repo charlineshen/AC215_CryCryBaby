@@ -57,6 +57,7 @@ def model(X, y):
     
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=215)
     def shuffle_split_data(X, y):
+        np.random.seed(103)
         arr_rand = np.random.rand(X.shape[0])
         split = arr_rand < np.percentile(arr_rand, 80)
 
