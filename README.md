@@ -20,7 +20,7 @@ Project Organization
             │   ├── Pipfile
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
-            │   └── preprocessing.py
+            │   └── cli.py
             └── model
                   ├── Dockerfile
               │   ├── Pipfile
@@ -48,8 +48,8 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 
 
 **Preprocess container**
-- This container reads all the audio files (in .wav format), translate them into spectrogram (in .txt format), and stores it back to GCP
-- Source and destincation GCS location are preset in cli.py. Input to this container is secrets files - via docker
+- This container reads all the audio files (in .wav format), translate them into spectrogram (in .npy format), and stores it back to GCP
+- Source and destincation GCS location are preset in `preprocessing.py`. Input to this container is secrets files - via docker
 - Output from this container stored at GCS location
 
 (1) `src/preprocessing/preprocessing.py`  - Here we first download audio files from GCP,  convert our audio files into numerical representation called spectrogram, normalize each matrices, and save the X & y data for our model on GCS. 
@@ -71,12 +71,62 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 1. [Login GCP, select ac215-project-400018, start the VM instance] 
 2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
 3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
-4. Inside the container, run preprocessing using command: `python cli.py`
-5. `cli.py` would download audio files from GCP bucket, transform audio files into spectrograms(matrices in .txt files), and then upload the processed files to GCP bucket. You could observe the updates in Cloud Storage - Buckets in your GCP project.
+4. Inside the container, run preprocessing using command: `python preprocessing.py`
+5. `preprocessing.py` would download audio files from GCP bucket, transform audio files into spectrograms(matrices in .npy files), and then upload the processed files to GCP bucket. You could observe the updates in Cloud Storage - Buckets in your GCP project.
 6. Stop VM instance!
 
-**Container 2**
-TO BE UPDATED
+**Data Version Container 2**
+- This container load processed spectrogram files from GCP, double the data data size by adding random noises between 0-0.01, and track data versions via `dvc`. 
+
+
+(1) `src/dataversion/cli.py`  - Here we first download spectrogram files from GCP, do a simple data augmentation to double the data size, and then upload the versioned data to GCP buckets via `dvc`. 
+
+(2) `src/dataversion/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
+
+(3) `src/dataversion/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
+
+(4) `src/dataversion/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
+
+(5) `src/dataversion/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
+
+**Mock Submission**
+
+
+***To open the container:***
+
+0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
+1. [Login GCP, select ac215-project-400018, start the VM instance] 
+2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
+3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
+4. Inside the container, run preprocessing using command: `python cli.py`
+5. Stop VM instance!
+
+
+**Model Container 2**
+- This container load augmented spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
+
+
+(1) `src/model/model.py`  - Here we first download spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
+
+(2) `src/model/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
+
+(3) `src/model/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
+
+(4) `src/model/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
+
+(5) `src/model/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
+
+**Mock Submission**
+
+
+***To open the container:***
+
+0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
+1. [Login GCP, select ac215-project-400018, start the VM instance] 
+2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
+3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
+4. Inside the container, run preprocessing using command: `python model.py`
+5. Stop VM instance!
 
 **Notebooks** 
  To BE UPDATED (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations.)
