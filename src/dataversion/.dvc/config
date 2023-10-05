@@ -1,0 +1,5 @@
+[core]
+    no_scm = True
+    remote = cpp_dataset
+['remote "cpp_dataset"']
+    url = gs://baby-cry-bucket/dvc_store
