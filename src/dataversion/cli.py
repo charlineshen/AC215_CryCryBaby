@@ -50,7 +50,7 @@ def load_data():
 
 def data_augmentation(X, y):
     print(X.shape)
-    np.random.seed(seed=215)
+    np.random.seed(seed=217)
     X_fake = np.random.rand(8,128,64)/100 + X
     output_path = "/app/"+output_folder
     np.save(output_path + '/' + 'X_fake.npy',  X_fake)
