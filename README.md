@@ -15,6 +15,12 @@ Project Organization
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── preprocessing.py
+            ├── dataversion
+            │   ├── Dockerfile
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   └── preprocessing.py
             └── model
                   ├── Dockerfile
               │   ├── Pipfile
