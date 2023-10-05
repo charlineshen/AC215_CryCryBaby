@@ -13,7 +13,7 @@ export GCS_BUCKET_URI="gs://baby-cry-bucket"
 docker network inspect data-versioning-network >/dev/null 2>&1 || docker network create data-versioning-network
 
 # Build the image based on the Dockerfile
-docker build -t ccb-data-versioning --platform=linux/arm64/v8 -f Dockerfile .
+docker build -t ccb-data-versioning .
 
 # Run Container
 docker run --rm --name ccb-data-versioning -ti --entrypoint /bin/bash \

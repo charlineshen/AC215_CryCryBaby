@@ -2,8 +2,6 @@
 Module that contains the command line app.
 """
 import os
-import argparse
-import shutil
 import numpy as np
 from google.cloud import storage
 from tensorflow.keras import layers, models
@@ -104,9 +102,9 @@ def model(X, y):
     history = model.fit(train_data.batch(train_batch_size), epochs=epochs, validation_data=validation_data.batch(val_batch_size))
 
     # Evaluate the model on the test set
-    y_pred = model.predict(X_test)
-    y_pred_classes = np.argmax(y_pred, axis=1)
-    y_test_classes = np.argmax(y_test_encoded, axis=1)
+    # y_pred = model.predict(X_test)
+    # y_pred_classes = np.argmax(y_pred, axis=1)
+    # y_test_classes = np.argmax(y_test_encoded, axis=1)
 
     # accuracy = accuracy_score(y_test_classes, y_pred_classes)
     # print(f'Test accuracy: {accuracy:.2f}')

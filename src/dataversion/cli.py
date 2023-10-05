@@ -43,7 +43,7 @@ def load_data():
 def data_augmentation(X, y):
     print("Start Data Augmentation")
     np.random.seed(seed=217)
-    X_fake = np.random.rand(X.shape)/100 + X
+    X_fake = np.random.rand(X.shape[0], X.shape[1], X.shape[2])/100 + X
     X_augmented = np.concatenate((X, X_fake), axis=0)
     y_augmented = np.concatenate((y, y), axis=0)
 
