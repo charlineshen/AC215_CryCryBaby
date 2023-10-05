@@ -16,6 +16,8 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends build-essential && \
     pip install --no-cache-dir --upgrade pip && \
     pip install pipenv  && \
+    pip install numpy  && \
+    pip install tensorflow  && \
     apt-get --yes install libsndfile1 && \
     pip install --upgrade google-api-python-client && \
     pip install --upgrade google-cloud-storage && \

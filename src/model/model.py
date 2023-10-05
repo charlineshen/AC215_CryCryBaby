@@ -92,11 +92,16 @@ def model(X, y):
     y_train_encoded = tf.keras.utils.to_categorical(y_train, num_classes)
     y_test_encoded = tf.keras.utils.to_categorical(y_test, num_classes)
 
+    # Use TF data
+    train_data = tf.data.Dataset.from_tensor_slices((X_train, y_train_encoded))
+    validation_data = tf.data.Dataset.from_tensor_slices((X_test, y_test_encoded))
+
     # Train the model
-    batch_size = 32
+    train_batch_size = 5
+    val_batch_size = 3
     epochs = 10
 
-    history = model.fit(X_train, y_train_encoded, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+    history = model.fit(train_data.batch(train_batch_size), epochs=epochs, validation_data=validation_data.batch(val_batch_size))
 
     # Evaluate the model on the test set
     y_pred = model.predict(X_test)
