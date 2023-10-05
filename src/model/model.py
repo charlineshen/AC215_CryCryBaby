@@ -97,8 +97,8 @@ def model(X, y):
     validation_data = tf.data.Dataset.from_tensor_slices((X_test, y_test_encoded))
 
     # Train the model
-    train_batch_size = 5
-    val_batch_size = 3
+    train_batch_size = 32
+    val_batch_size = 16
     epochs = 10
 
     history = model.fit(train_data.batch(train_batch_size), epochs=epochs, validation_data=validation_data.batch(val_batch_size))
