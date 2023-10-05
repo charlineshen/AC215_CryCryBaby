@@ -1,0 +1,6 @@
+outs:
+- md5: 93a6ba236d3d01b2045c2677355fc160.dir
+  size: 746029
+  nfiles: 4
+  hash: md5
+  path: cpp_dataset
