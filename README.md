@@ -46,6 +46,10 @@ Parenting is a rewarding yet challenging journey that millions of individuals em
 ### Milestone3 ###
 Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/gveres/donateacry-corpus/tree/master, cleaned and updated version). We parked our dataset in a private Google Cloud Bucket. 
 
+** Experiment Tracking **
+Please see our output from Weights & Biases below. This tool helps us keep track of model training. Unfortunately, our validation accuracy did not increase so we'll have to go back to the drawing board! 
+![wandb](images/wandb.png)
+
 
 **Preprocess container**
 - This container reads all the audio files (in .wav format), translate them into spectrogram (in .npy format), and stores it back to GCP
@@ -129,5 +133,8 @@ Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/
 5. Stop VM instance!
 
 **Notebooks** 
- To BE UPDATED (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations.)
+ (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations. Note, currently all notebooks are very messy and will be cleaned up later!)
+ (1) `crycrybaby_poc_cleaned.ipynb` - Baseline model
+ (2) `crycrybaby_poc_wandb.ipynb` - Baseline model and a VGG-ish model to try out Weights & Biases
+ (3) `04_tutorial_mushroom_classification_models_wandb.ipynb` - Attempt at walking through the in-class tutorial for Weights & Biases with our data but it was unsuccessful
 
