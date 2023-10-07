@@ -46,7 +46,7 @@ Parenting is a rewarding yet challenging journey that millions of individuals em
 ### Milestone3 ###
 Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/gveres/donateacry-corpus/tree/master, cleaned and updated version). We parked our dataset in a private Google Cloud Bucket. 
 
-** Experiment Tracking **
+**Experiment Tracking**
 Please see our output from Weights & Biases below. This tool helps us keep track of model training. Unfortunately, our validation accuracy did not increase so we'll have to go back to the drawing board! 
 ![wandb](images/wandb.png)
 
