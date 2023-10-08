@@ -139,7 +139,10 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 **Notebooks** 
  (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations. Note, currently all notebooks are very messy and will be cleaned up later!)
+
  (1) `crycrybaby_poc_cleaned.ipynb` - Baseline model
+ 
  (2) `crycrybaby_poc_wandb.ipynb` - Baseline model and a VGG-ish model to try out Weights & Biases
+ 
  (3) `04_tutorial_mushroom_classification_models_wandb.ipynb` - Attempt at walking through the in-class tutorial for Weights & Biases with our data but it was unsuccessful
 
