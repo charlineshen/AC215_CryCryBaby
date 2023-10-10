@@ -1,29 +1,19 @@
 # Use the official Debian-hosted Python image
 FROM python:3.8-slim-buster
 
-# Tell pipenv where the shell is. 
-# This allows us to use "pipenv shell" as a container entry point.
-ENV PYENV_SHELL=/bin/bash
-
 # JZ: update credential
-
-# ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
-
-ENV GOOGLE_APPLICATION_CREDENTIALS=../secrets/ccb.json
+ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
 
 # Ensure we have an up to date baseline, install dependencies 
 RUN set -ex; \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends build-essential && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        libsndfile1 \
+        vim && \
     pip install --no-cache-dir --upgrade pip && \
-    pip install pipenv  && \
-    pip install numpy  && \
-    pip install tensorflow  && \
-    apt-get --yes install libsndfile1 && \
-    pip install --upgrade google-api-python-client && \
-    pip install --upgrade google-cloud-storage && \
-    apt-get --yes install vim && \
+    pip install pipenv && \
     mkdir -p /app
 
 WORKDIR /app
@@ -31,13 +21,15 @@ WORKDIR /app
 # Add Pipfile, Pipfile.lock
 ADD Pipfile Pipfile.lock /app/
 
+# check to sync
 RUN pipenv sync
 
 # Source code
 ADD . /app
 
-# Entry point
-ENTRYPOINT ["/bin/bash"]
+# Run script (avoid creating shell)
+ENTRYPOINT ["pipenv", "run", "python"]
+CMD ["model.py"]
 
-# Get into the pipenv shell
-CMD ["-c", "pipenv shell"]
+# Use docker run -it <image_name> /bin/bash to create interactive session for development
+

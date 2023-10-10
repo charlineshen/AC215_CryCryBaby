@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+numpy = "*"
+tensorflow = "*"
+google-api-python-client = "*"
 google-cloud-storage = "*"
 
 [requires]
