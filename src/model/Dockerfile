@@ -7,7 +7,9 @@ ENV PYENV_SHELL=/bin/bash
 
 # JZ: update credential
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+# ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+
+ENV GOOGLE_APPLICATION_CREDENTIALS=../secrets/ccb.json
 
 # Ensure we have an up to date baseline, install dependencies 
 RUN set -ex; \
