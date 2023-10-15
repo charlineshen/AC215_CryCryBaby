@@ -14,7 +14,6 @@ RUN set -ex; \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends build-essential && \
-    
     # need to install git because we will be downloading files from donate-a-cry github
     apt-get update && apt-get install -y git && \
     pip install --no-cache-dir --upgrade pip && \
