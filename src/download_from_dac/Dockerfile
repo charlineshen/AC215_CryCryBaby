@@ -18,7 +18,6 @@ RUN set -ex; \
     apt-get update && apt-get install -y git && \
     pip install --no-cache-dir --upgrade pip && \
     pip install pipenv  && \
-
     apt-get --yes install libsndfile1 && \
     pip install --upgrade google-api-python-client && \
     pip install --upgrade google-cloud-storage && \
