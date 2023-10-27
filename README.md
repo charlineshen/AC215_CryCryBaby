@@ -70,6 +70,7 @@ We were able to get the Vertex AI Pipeline working on a subset of our containers
 ![vertex_ai](images/vertex_ai.png)
 
 **Model Compression**
+
 We used a model compression technique(model pruning) on model 1. Here are some comparation of before and after pruning models.
 
 Pictures of accuracy, weight analysis, and disk space before Prune:
