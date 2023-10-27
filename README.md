@@ -8,6 +8,11 @@ Project Organization
       ├── LICENSE
       ├── README.md
       ├── requirements.txt
+      └── notebooks
+            ├── crycrybaby_poc_cleaned.ipynb
+            ├── crycrybaby_poc_wandb.ipynb
+            ├── model2.ipynb
+            ├── model1.ipynb
       └── src
             ├── download_from_dac
             │   ├── Dockerfile
@@ -33,12 +38,12 @@ Project Organization
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── model1.py
-            └── model
-                  ├── Dockerfile
-              │   ├── Pipfile
-              │   ├── Pipfile.lock
-              │   ├── docker-shell.sh
-              │   └── model.py
+            └── model2
+            |   ├── Dockerfile
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   └── model2.py
   
 
 --------
@@ -67,6 +72,12 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 (Unfortunately, Google has not yet updated our quota per our request.)
 
+### Milestone4 ###
+
+**Model Compression**
+We used a model compression technique(model pruning) on model 1. Here are some comparation of before and after pruning models.
+
+
 
 **Preprocess container**
 - This container reads all the audio files (in .wav format), translate them into spectrogram (in .npy format), and stores it back to GCP
@@ -83,20 +94,8 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 (5) `src/preprocessing/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-**Mock Submission**
 
-
-***To open the container:***
-
-0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
-1. [Login GCP, select ac215-project-400018, start the VM instance] 
-2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
-3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
-4. Inside the container, run preprocessing using command: `python preprocessing.py`
-5. `preprocessing.py` would download audio files from GCP bucket, transform audio files into spectrograms(matrices in .npy files), and then upload the processed files to GCP bucket. You could observe the updates in Cloud Storage - Buckets in your GCP project.
-6. Stop VM instance!
-
-**Data Version Container 2**
+**Data Version Container**
 - This container load processed spectrogram files from GCP, double the data data size by adding random noises between 0-0.01, and track data versions via `dvc`. 
 
 
@@ -110,17 +109,6 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 (5) `src/dataversion/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-**Mock Submission**
-
-
-***To open the container:***
-
-0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
-1. [Login GCP, select ac215-project-400018, start the VM instance] 
-2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
-3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
-4. Inside the container, run preprocessing using command: `python cli.py`
-5. Stop VM instance!
 
 
 **Model Container 1**
@@ -137,24 +125,13 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 (5) `src/model1/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
-**Mock Submission**
-
-
-***To open the container:***
-
-0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
-1. [Login GCP, select ac215-project-400018, start the VM instance] 
-2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
-3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
-4. Inside the container, run preprocessing using command: `python model1.py`
-5. Stop VM instance!
 
 
 **Model Container 2**
 - This container load augmented spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
 
 
-(1) `src/model/model.py`  - Here we first download spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
+(1) `src/model/model2.py`  - Here we first download spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
 
 (2) `src/model/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
 
@@ -164,17 +141,23 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 
 (5) `src/model/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
 
+
+
 **Mock Submission**
 
+The following is an example of running preprocessing container. You could run other containers by changing the path to directory and the python script you run.
 
 ***To open the container:***
 
 0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
 1. [Login GCP, select ac215-project-400018, start the VM instance] 
-2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
+2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/preprocessing folder
 3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
-4. Inside the container, run preprocessing using command: `python model.py`
-5. Stop VM instance!
+4. Inside the container, run preprocessing using command: `python preprocessing.py`
+5. `preprocessing.py` would download audio files from GCP bucket, transform audio files into spectrograms(matrices in .npy files), and then upload the processed files to GCP bucket. You could observe the updates in Cloud Storage - Buckets in your GCP project.
+6. Stop VM instance!
+
+
 
 **Notebooks** 
  (This folder contains code that is not part of container - for e.g: EDA, any 🔍 🕵️‍♀️ 🕵️‍♂️ crucial insights, reports or visualizations. Note, currently all notebooks are very messy and will be cleaned up later!)
