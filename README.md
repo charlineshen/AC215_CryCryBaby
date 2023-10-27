@@ -1,7 +1,7 @@
-AC215-Milestone3
+AC215-Milestone4
 ==============================
 
-AC215 - Milestone3
+AC215 - Milestone4
 
 Project Organization
 ------------
@@ -47,7 +47,7 @@ Project Organization
   
 
 --------
-# AC215 - Milestone3 - Cry Cry Baby
+# AC215 - Milestone4 - Cry Cry Baby
 
 **Team Members**
 Jessica Gochioco, Jingwen Zhang, Adam Stone, Charline Shen
@@ -65,6 +65,7 @@ Parenting is a rewarding yet challenging journey that millions of individuals em
 ### Milestone4 ###
 
 **Vertex AI Pipeline**
+
 We were able to get the Vertex AI Pipeline working on a subset of our containers. We are still working on cleaning up our system architecture, but here is what we have for now! 
 ![vertex_ai](images/vertex_ai.png)
 
