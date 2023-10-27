@@ -9,6 +9,12 @@ Project Organization
       ├── README.md
       ├── requirements.txt
       └── src
+            ├── download_from_dac
+            │   ├── Dockerfile
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   └── download_from_dac.py
             ├── preprocessing
             │   ├── Dockerfile
             │   ├── Pipfile
@@ -21,6 +27,12 @@ Project Organization
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── cli.py
+            ├── model1
+            │   ├── Dockerfile
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   └── model1.py
             └── model
                   ├── Dockerfile
               │   ├── Pipfile
@@ -111,6 +123,33 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 5. Stop VM instance!
 
 
+**Model Container 1**
+- This container does binary classification to classify audio data into cry and non cry data. We load augmented spectrogram files from GCP, train the model, and save the model in GCP bucket for downstream inference container.
+
+
+(1) `src/model1/model1.py`  - Here we first download spectrogram files from GCP, train the model, and save the model in GCP bucket for downstream inference container. 
+
+(2) `src/model1/Dockerfile` - This dockerfile starts with  `python:3.8-slim-buster`. This <statement> attaches volume to the docker container and also uses secrets to connect to GCS.
+
+(3) `src/model1/Pipfile` - This file will be used by the Pipenv virtual environment to manage project dependencies.
+
+(4) `src/model1/Pipfile.lock` - This file replaces the requirements. txt file used in most Python projects and adds security benefits of tracking the packages hashes that were last locked
+
+(5) `src/model1/docker-shell.sh` - This shell file grabs credentials from GCP and automates the execution of Dockerfile.
+
+**Mock Submission**
+
+
+***To open the container:***
+
+0. Send an email to charlineshen@g.harvard.edu with your email address associated with your GCP account. We would add you as an editor to our GCP project.
+1. [Login GCP, select ac215-project-400018, start the VM instance] 
+2. Open a GCP terminal, change directory into /home/charlineshen/AC215_CryCryBaby/src/dataversion folder
+3. Run `docker-shell.sh` using command: `sudo sh docker-shell.sh`
+4. Inside the container, run preprocessing using command: `python model1.py`
+5. Stop VM instance!
+
+
 **Model Container 2**
 - This container load augmented spectrogram files from GCP, convert data to TF.data format, train the model, and save the model in GCP bucket for downstream inference container. 
 
@@ -144,5 +183,7 @@ Please see our output from Weights & Biases below. This tool helps us keep track
  
  (2) `crycrybaby_poc_wandb.ipynb` - Baseline model and a VGG-ish model to try out Weights & Biases
  
- (3) `04_tutorial_mushroom_classification_models_wandb.ipynb` - Attempt at walking through the in-class tutorial for Weights & Biases with our data but it was unsuccessful
+ (3) `model2.ipynb` - A cleaned up version of model 2 with TF datasets, weights & Biases, and VGG-ish model.
+
+ (4) `model1.ipynb` - A version of model 1 with model compression(pruning).
 
