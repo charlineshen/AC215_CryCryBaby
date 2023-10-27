@@ -60,19 +60,13 @@ Cry Cry Baby
 Parenting is a rewarding yet challenging journey that millions of individuals embark on each year. One of the most difficult aspects of caring for a baby is understanding and addressing their needs, especially when they have not yet learned how to talk. Our project centers on the application of the Dunstan Baby Language (DBL) , a concept suggesting that infants possess distinct vocal cues for various needs, and the development of a mobile app that leverages this knowledge. This app aims to empower parents by enabling them to decode their baby's cries and respond effectively, thereby reducing the stress associated with early parenthood. Furthermore, our project envisions a feature to have caretakers self-identify cries in order to add to our dataset, as well as the integration of a chatbot that can offer real-time support and guidance to parents.
 
 
-### Milestone3 ###
-Our main datasource will come from the Donate-a-Cry Corpus  (https://github.com/gveres/donateacry-corpus/tree/master, cleaned and updated version). We parked our dataset in a private Google Cloud Bucket. 
 
-**Experiment Tracking**
-
-Please see our output from Weights & Biases below. This tool helps us keep track of model training. Unfortunately, our validation accuracy did not increase so we'll have to go back to the drawing board! 
-![wandb](images/wandb.png)
-
-**Serverless Training**
-
-(Unfortunately, Google has not yet updated our quota per our request.)
 
 ### Milestone4 ###
+
+**Vertex AI Pipeline**
+We were able to get the Vertex AI Pipeline working on a subset of our containers. We are still working on cleaning up our system architecture, but here is what we have for now! 
+![vertex_ai](images/vertex_ai.png)
 
 **Model Compression**
 We used a model compression technique(model pruning) on model 1. Here are some comparation of before and after pruning models.
