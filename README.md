@@ -77,6 +77,21 @@ Please see our output from Weights & Biases below. This tool helps us keep track
 **Model Compression**
 We used a model compression technique(model pruning) on model 1. Here are some comparation of before and after pruning models.
 
+Pictures of accuracy, weight analysis, and disk space before Prune:
+
+![after_acc](images/pruning/after_acc.jpg)
+
+![after_zeros](images/pruning/after_zeros.jpg)
+
+![after_space](images/pruning/after_space.jpg)
+
+Pictures of accuracy, weight analysis, and disk space before Prune:
+
+![before_acc](images/pruning/before_acc.jpg)
+
+![before_zeros](images/pruning/before_zeros.jpg)
+
+![before_space](images/pruning/before_space.jpg)
 
 
 **Preprocess container**
