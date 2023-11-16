@@ -28,3 +28,18 @@ services:
     # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
     # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
     
+  frontend-react:
+    build:
+      context: ./frontend-react
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend-react:/app
+    environment:
+      - PUBLIC_URL=/
+    # if want to launch into interactive modde rather than yarn
+    # command: ["/bin/bash"]
+    # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
+    # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
+    
