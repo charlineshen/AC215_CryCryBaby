@@ -29,7 +29,7 @@ ADD . /app
 
 # Run script (avoid creating shell)
 ENTRYPOINT ["pipenv", "run", "python"]
-CMD ["model.py"]
+CMD ["model1.py"]
 
 # Use docker run -it <image_name> /bin/bash to create interactive session for development
 

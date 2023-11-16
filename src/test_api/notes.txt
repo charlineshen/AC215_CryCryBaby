@@ -1,0 +1,10 @@
+Set up as a container
+
+Run on VM first
+
+Using fastapi and pipenv
+
+Try it locally, then in docker.
+
+(Can we host within docker?)
+

@@ -23,6 +23,19 @@
         }
       }
     },
+    "comp-model2": {
+      "executorLabel": "exec-model2",
+      "inputDefinitions": {
+        "parameters": {
+          "model2_input_bucket": {
+            "parameterType": "STRING"
+          },
+          "model2_output_bucket": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
     "comp-preprocessing": {
       "executorLabel": "exec-preprocessing",
       "inputDefinitions": {
@@ -77,6 +90,26 @@
             "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef model1(\n        model1_input_bucket: str,\n        model1_output_bucket: str\n):\n    pass\n\n"
           ],
           "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/model1:latest"
+        }
+      },
+      "exec-model2": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "model2"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef model2(\n        model2_input_bucket: str,\n        model2_output_bucket: str\n):\n    pass\n\n"
+          ],
+          "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/model2:latest"
         }
       },
       "exec-preprocessing": {
@@ -150,6 +183,30 @@
             "name": "model1"
           }
         },
+        "model2": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-model2"
+          },
+          "dependentTasks": [
+            "model1"
+          ],
+          "inputs": {
+            "parameters": {
+              "model2_input_bucket": {
+                "componentInputParameter": "model2_input_bucket"
+              },
+              "model2_output_bucket": {
+                "componentInputParameter": "model2_output_bucket"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "model2"
+          }
+        },
         "preprocessing": {
           "cachingOptions": {
             "enableCache": true
@@ -189,6 +246,16 @@
           "parameterType": "STRING"
         },
         "model1_output_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model2_input_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model2_output_bucket": {
           "defaultValue": "gs://baby-cry-bucket",
           "isOptional": true,
           "parameterType": "STRING"

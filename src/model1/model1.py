@@ -106,7 +106,9 @@ def model1(X, y):
     accuracy = accuracy_score(y_test_classes, y_pred_classes)
     print(f'Test accuracy: {accuracy:.2f}')
 
-    model.save("/app/" + output_folder + "/" + "model1_v1.h5")
+    # TODO: why was app used?
+    # model.save("/app/" + output_folder + "/" + "model1_v1_vai.h5")
+    model.save(output_folder + "/" + "model1_v1_vai.h5")
 
     return
 

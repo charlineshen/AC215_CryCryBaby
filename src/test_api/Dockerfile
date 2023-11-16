@@ -1,5 +1,5 @@
 # Use the official Debian-hosted Python image
-FROM python:3.8-slim-buster
+FROM python:3.8.12-slim-buster
 
 # JZ: update credential
 ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
@@ -28,8 +28,7 @@ RUN pipenv sync
 ADD . /app
 
 # Run script (avoid creating shell)
-ENTRYPOINT ["pipenv", "run", "python"]
-CMD ["model2.py"]
+ENTRYPOINT ["pipenv", "run"]
+CMD ["uvicorn", "test_api:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # Use docker run -it <image_name> /bin/bash to create interactive session for development
-

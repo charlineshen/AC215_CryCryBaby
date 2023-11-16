@@ -34,6 +34,15 @@ def model1(
         model1_output_bucket: str
 ):
     pass
+@component(
+    base_image='us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/model2:latest',
+)
+def model2(
+        model2_input_bucket: str,
+        model2_output_bucket: str
+):
+    pass
+
 
 # declare the pipeline as a Python function
 @dsl.pipeline(
@@ -45,7 +54,10 @@ def my_pipeline(
     preprocessing_input_bucket: str = bucket_uri,
     preprocessing_output_bucket: str = bucket_uri,
     model1_input_bucket: str = bucket_uri,
-    model1_output_bucket: str = bucket_uri
+    model1_output_bucket: str = bucket_uri,
+    model2_input_bucket: str = bucket_uri,
+    model2_output_bucket: str = bucket_uri
+
 ):
     # Create a task for the first component
     my_component1_task = download_from_dac(download_dac_output_bucket=download_dac_output_bucket)
@@ -59,6 +71,10 @@ def my_pipeline(
     # Create a task for the third component
     my_component3_task = model1(model1_input_bucket=model1_input_bucket, model1_output_bucket=model1_output_bucket)
     my_component3_task.after(my_component2_task)
+
+    # Create a task for the fourth component
+    my_component4_task = model2(model2_input_bucket=model2_input_bucket, model2_output_bucket=model2_output_bucket)
+    my_component4_task.after(my_component3_task)
 
 if __name__ == '__main__':
     compiler.Compiler().compile(
