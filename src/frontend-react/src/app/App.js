@@ -207,7 +207,7 @@ export default function Pricing() {
                     {tier.buttonText}
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="*.wav"
                       capture="camera"
                       autoComplete="off"
                       tabIndex="-1"
