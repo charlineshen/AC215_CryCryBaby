@@ -40,8 +40,6 @@ EXPOSE 9000
 USER app
 WORKDIR /app
 
-RUN pipenv lock
-
 # Install python packages
 ADD --chown=app:app Pipfile Pipfile.lock /app/
 

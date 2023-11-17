@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import asyncio
-from api.tracker import TrackerService
+# from api.tracker import TrackerService
 import pandas as pd
 import os
 from fastapi import File
@@ -9,8 +9,8 @@ from tempfile import TemporaryDirectory
 from api import model
 from api import test_wav_upload
 
-# Initialize Tracker Service
-tracker_service = TrackerService()
+# # Initialize Tracker Service
+# tracker_service = TrackerService()
 
 # Setup FastAPI app
 app = FastAPI(title="API Server", description="API Server", version="v1")
@@ -64,7 +64,7 @@ async def get_index():
 
 @app.post("/predict")
 async def predict(file: bytes = File(...)):
-    print("predict file:", len(file), type(file))
+    # print("predict file:", len(file), type(file))
     self_host_model = True
 
    # Save the audio
@@ -86,7 +86,7 @@ async def predict(file: bytes = File(...)):
         #     # @Adam
         #     prediction_results = model.make_prediction_vertexai(audio_path)
 
-    print(prediction_results)
+    # print(prediction_results)
     return prediction_results
 
 
@@ -96,7 +96,7 @@ async def predict(file: bytes = File(...)):
 async def testupload(file: bytes = File(...)):
     # Save the audio
     with TemporaryDirectory() as audio_dir:
-        audio_path = os.path.join(audio_dir, "audio.wav")
+        audio_path = os.path.join(audio_dir, "audio1.wav")
         with open(audio_path, "wb") as output:
             output.write(file)
 

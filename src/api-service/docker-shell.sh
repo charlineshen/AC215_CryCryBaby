@@ -20,7 +20,7 @@ docker run --rm --name $IMAGE_NAME -ti \
 -v "$BASE_DIR":/app \
 -v "$SECRETS_DIR":/secrets \
 -v "$PERSISTENT_DIR":/persistent \
--p 9001:9001 \
+-p 9000:9000 \
 -e DEV=1 \
 -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/ml-workflow.json \
 -e GCS_BUCKET_NAME=$GCS_BUCKET_NAME \

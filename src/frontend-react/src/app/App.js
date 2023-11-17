@@ -64,7 +64,7 @@ export default function Pricing() {
             setTestUpload(response.data);
         })
 
-    DataService.Predict()
+    DataService.Predict(formData)
       .then(function (response) {
         console.log(response.data);
         setPrediction(response.data);
