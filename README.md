@@ -1,7 +1,7 @@
-AC215-Milestone4
+AC215-Milestone5
 ==============================
 
-AC215 - Milestone4
+AC215 - Milestone5
 
 Project Organization
 ------------
@@ -26,28 +26,46 @@ Project Organization
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── preprocessing.py
-            ├── dataversion
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   └── cli.py
             ├── model1
             │   ├── Dockerfile
             │   ├── Pipfile
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── model1.py
-            └── model2
+            ├── model2
             |   ├── Dockerfile
             │   ├── Pipfile
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── model2.py
+            ├── TODO(@Jessica, Adam): api-service
+            |   ├── Dockerfile
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── docker-shell.sh
+            │   └── model2.py
+            ├── frontend-react
+            |   ├── conf
+            |   ├── public
+            |   ├── src
+            |   |   ├── app
+            |   |   ├── services
+            |   |   ├── index.css
+            |   |   ├── index.js
+            |   ├── .env.development
+            |   ├── .env.production
+            │   ├── Pipfile
+            │   ├── Pipfile.lock
+            │   ├── package-lock.json
+            │   ├── package.json
+            │   ├── yarn.lock
+            │   ├── docker-shell.sh
+            │   ├── Dockerfile
+            │   └── Dockerfile.dev
   
 
 --------
-# AC215 - Milestone4 - Cry Cry Baby
+# AC215 - Milestone5 - Cry Cry Baby
 
 **Team Members**
 Jessica Gochioco, Jingwen Zhang, Adam Stone, Charline Shen
@@ -59,6 +77,114 @@ Cry Cry Baby
 **Project**
 Parenting is a rewarding yet challenging journey that millions of individuals embark on each year. One of the most difficult aspects of caring for a baby is understanding and addressing their needs, especially when they have not yet learned how to talk. Our project centers on the application of the Dunstan Baby Language (DBL) , a concept suggesting that infants possess distinct vocal cues for various needs, and the development of a mobile app that leverages this knowledge. This app aims to empower parents by enabling them to decode their baby's cries and respond effectively, thereby reducing the stress associated with early parenthood. Furthermore, our project envisions a feature to have caretakers self-identify cries in order to add to our dataset, as well as the integration of a chatbot that can offer real-time support and guidance to parents.
 
+## Milestone 5
+
+After completions of building a robust ML Pipeline in our previous milestone we have built a backend api service and frontend app. This will be our user-facing application that ties together the various components built in previous milestones.
+
+**Application Design**
+
+Before we start implementing the app we built a detailed design document outlining the application’s architecture. We built a Solution Architecture abd Technical Architecture to ensure all our components work together.
+
+Here is our Solution Architecture:
+<img src="images/solution-arch.png"  width="800">
+
+Here is our Technical Architecture:
+<img src="images/technical-arch.png"  width="800">
+
+
+**Backend API**
+
+We built backend api service using fast API to expose model functionality to the frontend. We also added apis that will help the frontend display some key information about the prediction results. 
+
+<!-- <img src="images/api-list.png"  width="800"> -->
+
+**Frontend**
+
+A user friendly React app was built to identify baby cry and different reasons for baby cry. Using the app a user can take an audio of a baby cry and upload it. The app will send the audio to the backend api to get prediction results on the probablity the baby is crying and the reason for baby cry. 
+
+<!-- Here are some screenshots of our app:
+<img src="images/frontend-1.png"  width="800">
+
+<img src="images/frontend-2.png"  width="800"> -->
+
+<!-- **Deployment** -->
+
+<!-- We used Ansible to create, provision, and deploy our frontend and backend to GCP in an automated fashion. Ansible helps us manage infrastructure as code and this is very useful to keep track of our app infrastructure as code in GitHub. It helps use setup deployments in a very automated way. -->
+
+<!-- Here is our deployed app on a single VM in GCP:
+<img src="images/deployment-single-vm.png"  width="800"> -->
+
+
+### Code Structure
+
+The following are the folders from the previous milestones:
+```
+- preprocessing
+- model1
+- model2
+- download_from_dac
+```
+
+**API Service Container**
+This container has all the python files to run and expose thr backend apis.
+
+To run the container locally:
+- Open a terminal and go to the location where `src/api-service`
+- Run `sh docker-shell.sh`
+- Once inside the docker container run `uvicorn_server`
+- To view and test APIs go to `http://localhost:9000/`
+
+**Frontend Container**
+This container contains all the files to develop and build a react app. There are dockerfiles for both development and production
+
+To run the container locally:
+- Open a terminal and go to the location where `src/frontend-react`
+- Run `sh docker-shell.sh`
+- If running the container for the first time, run `yarn install`
+- Once inside the docker container run `yarn start`
+- Go to `http://localhost:3000` to access the app locally
+
+
+<!-- **Deployment**
+`docker-compse.yml` is used to deploy all our app containers. The deployment is to GCP and all docker images go to GCR. 
+
+To run the container locally:
+- Open a terminal and go to the location where `awesome-app/src/deployment`
+- Run `sh docker-shell.sh`
+- Build and Push Docker Containers to GCR (Google Container Registry)
+```
+ansible-playbook deploy-docker-images.yml -i inventory.yml
+```
+
+- Create Compute Instance (VM) Server in GCP
+```
+ansible-playbook deploy-create-instance.yml -i inventory.yml --extra-vars cluster_state=present
+```
+
+- Provision Compute Instance in GCP
+Install and setup all the required things for deployment.
+```
+ansible-playbook deploy-provision-instance.yml -i inventory.yml
+```
+
+- Setup Docker Containers in the  Compute Instance
+```
+ansible-playbook deploy-setup-containers.yml -i inventory.yml
+```
+
+- Setup Webserver on the Compute Instance
+```
+ansible-playbook deploy-setup-webserver.yml -i inventory.yml
+```
+Once the command runs go to `http://<External IP>/`  -->
+
+---
+
+## NOTE
+
+**DO NOT KEEP YOUR GCP INSTANCES RUNNING**
+
+Once you are done with taking screenshots for the milestone bring them down. 
 
 
 
@@ -180,4 +306,3 @@ The following is an example of running preprocessing container. You could run ot
  (3) `model2.ipynb` - A cleaned up version of model 2 with TF datasets, weights & Biases, and VGG-ish model.
 
  (4) `model1.ipynb` - A version of model 1 with model compression(pruning).
-
