@@ -19,6 +19,17 @@ const DataService = {
             }
         });
     },
+    GetDummy: async function () {
+        return await axios.get(BASE_API_URL + "/dummyoutputs");
+    },
+
+    TestUpload: async function (formData) {
+        return await axios.post(BASE_API_URL + "/testupload", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
 }
 
 export default DataService;

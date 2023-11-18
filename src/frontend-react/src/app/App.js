@@ -16,7 +16,6 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import DataService from '../services/DataService';
 
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -30,48 +29,7 @@ function Copyright(props) {
   );
 }
 
-const tiers = [
-  {
-    title: 'Audio upload',
-    price: '',
-    pre_description: [
-      'Let me hear the baby cry',
-      '.',
-      '.',
-    ],
-    post_description:[],
-    buttonText: 'Upload',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Cry Detection',
-    // subheader: 'Most popular',
-    pre_description: [
-      'This is',
-    ],
-    price: '15%',
-    post_description: [
-      'chance is a cry',
-    ],
-    // buttonText: 'Get started',
-    // buttonVariant: 'contained',
-  },
-  {
-    title: 'Needs classification',
-    pre_description: [
-      'Your baby seems',
-      // '30 GB of storage',
-      // 'Help center access',
-      // 'Phone & email support',
-    ],
-    price: 'Hungry',
-    post_description: [
-      'based on our model',
-    ],
-    // buttonText: 'Contact us',
-    // buttonVariant: 'outlined',
-  },
-];
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -80,8 +38,10 @@ export default function Pricing() {
 
   const inputFile = useRef(null);
   // Component States
-  const [image, setImage] = useState(null);
-  const [prediction, setPrediction] = useState(null);
+  const [audio, setAudio] = useState(null);
+  const [prediction, setPrediction] = useState({'cry': 0, 'label': ':)', 'prob': 0}); //TODO: change dummy outputs to actual outputs
+  const [testUpload, setTestUpload] = useState(null);
+
 
   // Setup Component
   useEffect(() => {
@@ -92,16 +52,68 @@ export default function Pricing() {
   }
   const handleOnChange = (event) => {
     console.log(event.target.files);
-    setImage(URL.createObjectURL(event.target.files[0]));
+    setAudio(URL.createObjectURL(event.target.files[0]));
 
     var formData = new FormData();
     formData.append("file", event.target.files[0]);
-    DataService.Predict(formData)
+
+
+    DataService.TestUpload(formData)
         .then(function (response) {
             console.log(response.data);
-            setPrediction(response.data);
+            setTestUpload(response.data);
         })
+
+    DataService.Predict(formData)
+      .then(function (response) {
+        console.log(response.data);
+        setPrediction(response.data);
+      })
   }
+
+
+  const tiers = [
+    {
+      title: 'Audio Upload',
+      price: '',
+      pre_description: [
+        'Let me hear the baby cry',
+        '.',
+        'Upload filepath: ' + testUpload,
+      ],
+      post_description:[],
+      buttonText: 'Upload',
+      buttonVariant: 'outlined',
+    },
+    {
+      title: 'Cry Detection',
+      // subheader: 'Most popular',
+      pre_description: [
+        'This is',
+      ],
+      price: prediction['cry']+'%',
+      post_description: [
+        'chance is a cry',
+      ],
+      // buttonText: 'Get started',
+      // buttonVariant: 'contained',
+    },
+    {
+      title: 'Needs classification',
+      pre_description: [
+        'Your baby seems '+prediction['prob']+'%',
+        // '30 GB of storage',
+        // 'Help center access',
+        // 'Phone & email support',
+      ],
+      price: prediction['label'],
+      post_description: [
+        'based on our model',
+      ],
+      // buttonText: 'Contact us',
+      // buttonVariant: 'outlined',
+    },
+  ];
   
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -207,7 +219,7 @@ export default function Pricing() {
                     {tier.buttonText}
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="*.wav"
                       capture="camera"
                       autoComplete="off"
                       tabIndex="-1"
