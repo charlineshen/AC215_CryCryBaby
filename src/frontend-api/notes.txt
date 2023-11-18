@@ -1,0 +1,9 @@
+- Get the model working in the "model.py".  Ask Jessica if can help.
+
+- Add non-self option to run on vertexai.
+
+- Deploy to test.
+
+- Finish pipeline on VertexAI.
+
+- etc
