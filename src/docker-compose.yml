@@ -37,7 +37,6 @@ services:
     volumes:
       - ./api-service:/app
       - ./../../secrets:/secrets
-      - ~/.gitconfig:/etc/gitconfig
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json
   #   # command: ["/bin/bash"]
