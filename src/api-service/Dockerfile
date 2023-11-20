@@ -51,7 +51,7 @@ RUN pipenv sync
 ADD --chown=app:app . /app
 
 # Entry point
-ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","./docker-custom-entrypoint.sh"]
 
 # # Not needed since included in docker-entrypoint.sh
 # CMD ["uvicorn", "api-service:app", "--host", "0.0.0.0", "--port", "9000"]
