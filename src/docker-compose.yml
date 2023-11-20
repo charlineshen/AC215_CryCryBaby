@@ -39,6 +39,8 @@ services:
       - ./../../secrets:/secrets
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json
+    networks:
+      - my-network-name
   #   # command: ["/bin/bash"]
   #   # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
   #   # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
@@ -53,6 +55,13 @@ services:
     #  - ./frontend-react:/app 
     environment:
       - PUBLIC_URL=/
+    networks:
+      - my-network-name
+  
+networks:
+  my-network-name:
+    name: my-global-net
+
     # depends_on:
     #   - api-service
     # if want to launch into interactive modde rather than yarn
