@@ -51,4 +51,5 @@ ADD --chown=app:app . /app
 # Entry point
 ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
 
-CMD ["uvicorn", "api-service:app", "--host", "0.0.0.0", "--port", "9000"]
+# # Not needed since included in docker-entrypoint.sh
+# CMD ["uvicorn", "api-service:app", "--host", "0.0.0.0", "--port", "9000"]

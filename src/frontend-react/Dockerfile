@@ -27,5 +27,9 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Expose port 80 for Nginx
 EXPOSE 80
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start shell into container
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
+
+# Inlcuded in docker-entrypoint.sh
+# # Start Nginx
+# CMD ["nginx", "-g", "daemon off;"]
