@@ -49,9 +49,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "80:80" # NGINX
-    volumes:
-      - ./frontend-react:/app
-
+    #volumes:
+    #  - ./frontend-react:/app 
     environment:
       - PUBLIC_URL=/
     # depends_on:
