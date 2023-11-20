@@ -6,4 +6,4 @@
 # Then push the updated Pipfile.lock to git
 
 docker run --rm --name api-service -ti \
-    -v $(pwd):/app
+    -v $(pwd):/app api-service:latest \
