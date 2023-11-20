@@ -5,5 +5,5 @@
 # Then run `exit` to exit the container
 # Then push the updated Pipfile.lock to git
 
-docker run --rm --name api-service -ti \
-    -v $(pwd):/app api-service:latest \
+docker run --rm --name src-api-service -ti \
+    -v $(pwd):/app src-api-service:latest \
