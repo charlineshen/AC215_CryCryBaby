@@ -32,6 +32,7 @@ services:
     build: 
       context: ./api-service
       dockerfile: Dockerfile
+    image: src-api-service
     ports:
       - "9000:9000"
     volumes:
@@ -49,6 +50,7 @@ services:
     build:
       context: ./frontend-react
       dockerfile: Dockerfile
+    image: src-frontend-react
     ports:
       - "80:80" # NGINX
     #volumes:

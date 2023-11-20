@@ -2,7 +2,7 @@
 
 set -e
 
-export IMAGE_NAME="frontend-react"
+export IMAGE_NAME="src-frontend-react"
 
 docker build -t $IMAGE_NAME -f Dockerfile .
 echo "Finished building docker image"
