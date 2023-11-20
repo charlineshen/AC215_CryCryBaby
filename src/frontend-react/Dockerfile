@@ -5,6 +5,8 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 ENV PUBLIC_URL /
 
+RUN echo "Begin copying files"
+
 # Copy package.json and yarn.lock
 COPY package.json ./
 COPY yarn.lock ./
@@ -27,6 +29,9 @@ RUN yarn run build
 FROM nginx:stable
 
 # RUN echo "found nginx"
+
+# Copy the NGINX configuration file
+COPY ./conf/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built app from the first stage into Nginx's serving directory
 COPY --from=build /app/build /usr/share/nginx/html
