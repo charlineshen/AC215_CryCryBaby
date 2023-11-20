@@ -35,6 +35,7 @@ COPY ./conf/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the built app from the first stage into Nginx's serving directory
 COPY --from=build /app/build /usr/share/nginx/html
+COPY ./docker-custom-entrypoint.sh ./docker-custom-entrypoint.sh
 
 RUN echo "copied build"
 
@@ -44,7 +45,7 @@ EXPOSE 80
 RUN echo "adding entrypoint"
 
 # Start shell into container
-ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","./docker-custom-entrypoint.sh"]
 
 # Inlcuded in docker-entrypoint.sh
 # # Start Nginx
