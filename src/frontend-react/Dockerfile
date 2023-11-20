@@ -17,12 +17,12 @@ RUN yarn install
 # Copy the rest of your frontend-react directory into the image
 COPY . ./
 
-# RUN echo "starting yard run build"
+RUN echo "starting yard run build"
 
 # Build the React application
 RUN yarn run build
 
-# RUN echo "finished yard run build"
+RUN echo "finished yard run build"
 
 # Stage 2: Serve the app using Nginx
 
@@ -44,7 +44,7 @@ EXPOSE 80
 RUN echo "adding entrypoint"
 
 # Start shell into container
-ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh","./docker-entrypoint.sh"]
 
 # Inlcuded in docker-entrypoint.sh
 # # Start Nginx
