@@ -73,18 +73,18 @@ async def predict(file: bytes = File(...)):
         with open(audio_path, "wb") as output:
             output.write(file)
 
-        # Make prediction
-        prediction_results = {"cry": 0.99,
-                              "label": "hungry",
-                              "prob": 0.98,}
+        # # Make prediction
+        # prediction_results = {"cry": 0.99,
+        #                       "label": "hungry",
+        #                       "prob": 0.98,}
 
-        # TODO
-        # if self_host_model:
-        #     # @Jessica
-        #     prediction_results = model.make_prediction(audio_path)
-        # else:
-        #     # @Adam
-        #     prediction_results = model.make_prediction_vertexai(audio_path)
+        # TODO: call model to make prediction
+        if self_host_model:
+            # @Jessica
+            prediction_results = model.make_prediction(audio_path)
+        else:
+            # @Adam
+            prediction_results = model.make_prediction_vertexai(audio_path)
 
     # print(prediction_results)
     return prediction_results

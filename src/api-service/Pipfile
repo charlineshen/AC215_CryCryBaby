@@ -14,6 +14,10 @@ tensorflow-hub = "*"
 python-multipart = "*"
 tensorflow = "*"
 google-cloud-aiplatform = "*"
+librosa = "*"
+numpy = "*"
+matplotlib = "*"
+google-api-python-client = "*"
 
 
 [requires]
