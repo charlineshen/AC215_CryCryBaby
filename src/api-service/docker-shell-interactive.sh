@@ -6,7 +6,7 @@
 # Then push the updated Pipfile.lock to git
 export IMAGE_NAME="src-frontend-react"
 
-docker build -t --platform linux/amd64 $IMAGE_NAME -f Dockerfile .
+docker build --platform linux/amd64 $IMAGE_NAME -f Dockerfile .
 echo "Finished building docker image"
 echo "Running docker container"
 
