@@ -1,6 +1,8 @@
 # Use the official Debian-hosted Python image
 FROM python:3.9-slim-buster
 
+RUN echo "Begin api-service dockerfile"
+
 ARG DEBIAN_PACKAGES="build-essential git"
 
 # Prevent apt from showing prompts
