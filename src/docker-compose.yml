@@ -46,11 +46,12 @@ services:
   frontend-react:
     build:
       context: ./frontend-react
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "80:80" # NGINX
     volumes:
       - ./frontend-react:/app
+
     environment:
       - PUBLIC_URL=/
     # depends_on:
