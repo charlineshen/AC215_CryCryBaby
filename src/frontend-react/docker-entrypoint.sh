@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "frontend-react container is running"
 

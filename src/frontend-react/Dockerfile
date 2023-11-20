@@ -44,7 +44,7 @@ EXPOSE 80
 RUN echo "adding entrypoint"
 
 # Start shell into container
-ENTRYPOINT ["/bin/sh","./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]
 
 # Inlcuded in docker-entrypoint.sh
 # # Start Nginx

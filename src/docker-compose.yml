@@ -57,6 +57,8 @@ services:
       - PUBLIC_URL=/
     networks:
       - my-network-name
+    depends_on:
+      - api-service
   
 networks:
   my-network-name:
