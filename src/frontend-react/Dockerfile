@@ -1,6 +1,8 @@
 # Stage 1: Build the React application
 FROM node:14.5.0-alpine as build
 
+RUN echo "Begin copying files"
+
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 ENV PUBLIC_URL /
