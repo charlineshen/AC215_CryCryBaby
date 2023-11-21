@@ -13,7 +13,7 @@ echo "Running docker container"
 # Run the Docker container with volume mounts and environment variable
 docker run --rm --name $IMAGE_NAME -ti -p 9000:9000 \
     -v $(pwd):/app/stuff \
-    -v ./../../secrets:/secrets \
+    -v ./../../../secrets:/secrets \
     -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json \
     --entrypoint /bin/bash $IMAGE_NAME
 
