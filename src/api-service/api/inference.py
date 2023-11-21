@@ -123,5 +123,3 @@ def predict():
     # print("spectrogram reshaped...")
     get_prediction(model1, model2, spectrogram)
     # print("prediction complete...")
-
-# predict()
