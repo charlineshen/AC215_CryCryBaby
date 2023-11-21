@@ -46,17 +46,15 @@ WORKDIR /app
 # Comment out if updating pipfile.lock (?)
 ADD --chown=app:app Pipfile Pipfile.lock /app/
 
-# Only use if generating new lock file.
-USER root
-RUN pipenv lock
+# # Uncomment only if generating new lock file.
+# USER root
+# RUN pipenv lock
 
 RUN pipenv sync
 
 # Add the rest of the source code. This is done last so we don't invalidate all
 # layers when we change a line of code.
-
-# # Comment out to speed up build
-# ADD --chown=app:app . /app
+ADD --chown=app:app . /app
 
 # Entry point
 ENTRYPOINT ["/bin/bash","./docker-custom-entrypoint.sh"]
