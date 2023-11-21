@@ -48,7 +48,6 @@ WORKDIR /app
 # Only use if generating new lock file.
 USER root
 RUN pipenv lock
-USER app
 
 RUN pipenv sync
 
