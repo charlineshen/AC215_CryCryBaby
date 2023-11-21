@@ -8,20 +8,15 @@ import tensorflow as tf
 
 # Define the GCP project and bucket names
 gcp_project = "ac215-project"
-bucket_name = "baby-cry-bucket" 
+bucket_name = "baby-cry-bucket"
 bucket_prefix = "output_model/"
 bucket_name_test_audio = "baby-cry-inference-test"
 test_audio = "theo_tired_trimmed"
 models = ["model1_v1.h5", "model2_v1.h5"]
 
 # Define a dictionary to map the index to the corresponding label
-label_map = {
-    0: 'belly_pain',
-    1: 'burp',
-    2: 'discomfort',
-    3: 'hungry',
-    4: 'tired'
-}
+label_map = {0: "belly_pain", 1: "burp", 2: "discomfort", 3: "hungry", 4: "tired"}
+
 
 # Take test audio from GCS bucket
 def download_test_audio():
@@ -30,22 +25,24 @@ def download_test_audio():
     storage_client = storage.Client(project=gcp_project)
 
     bucket = storage_client.bucket(bucket_name_test_audio)
-    
+
     blob = bucket.blob(test_audio + ".wav")
     blob.download_to_filename(test_audio + ".wav")
 
+
 def wav_to_spectrogram(file_path, output_shape=(128, 64)):
-    
     print("converting wav to spectrogram...")
     # Load the WAV file
     y, sr = librosa.load(file_path, sr=8000, dtype=np.float32)
 
     # Generate the spectrogram
     spectrogram = librosa.feature.melspectrogram(y=y, sr=sr)
-    
+
     # Resize the spectrogram so that it can be fed into the model
-    spectrogram = librosa.util.fix_length(spectrogram, size=output_shape[1], mode='constant', constant_values=0)
-    
+    spectrogram = librosa.util.fix_length(
+        spectrogram, size=output_shape[1], mode="constant", constant_values=0
+    )
+
     # Normalize the spectrogram to values between 0 and 1, this really helps improve model accuracy
     spectrogram = librosa.util.normalize(spectrogram)
 
@@ -53,7 +50,6 @@ def wav_to_spectrogram(file_path, output_shape=(128, 64)):
     spectrogram = spectrogram.reshape(1, 128, 64, 1)
 
     return spectrogram, sr, y
-
 
 
 # Get our saved model from GCP
@@ -86,6 +82,7 @@ def download_models():
 
     return model1, model2
 
+
 # def get_wandb_model():
 #     run = wandb.init()
 #     artifact = run.use_artifact('ac215-ccb/model-registry/misunderstood-deluge-simple:v0', type='model')
@@ -94,9 +91,7 @@ def download_models():
 #     return model
 
 
-
 def get_prediction(model1, model2, spectrogram):
-    
     print("getting prediction from model1...")
 
     ##### Do model 1 predictions #####
@@ -115,40 +110,33 @@ def get_prediction(model1, model2, spectrogram):
     # Map the index to the corresponding label
     m2_predicted_label = label_map[m2_predicted_label_index]
 
-    print({"cry": m1_predictions[1],
-            "label": m2_predicted_label,
-            "prob": m2_predictions[m2_predicted_label_index]
-    })
-
-    print("prediction complete, returning values...")
-
-    return {"cry": m1_predictions[1],
-            "label": m2_predicted_label,
-            "prob": m2_predictions[m2_predicted_label_index]
+    results_dict = {
+        "cry": m1_predictions[1],
+        "label": m2_predicted_label,
+        "prob": m2_predictions[m2_predicted_label_index],
     }
 
-def predict_self_host(audio_path):
+    print("inference.py: prediction complete, returning values...")
+    print(results_dict)
 
+    return results_dict
+
+
+def predict_self_host(audio_path):
     print("predicting...")
 
     spectrogram, sr, y = wav_to_spectrogram(audio_path)
 
     print("spectrogram generated...")
-    
+
     print("downloading models...")
 
     model1, model2 = download_models()
 
     print("models downloaded...")
-    
+
     results = get_prediction(model1, model2, spectrogram)
 
-    print("prediction complete...")
+    print("inference.py: prediction complete...")
 
     return results
-
-    # # TODO remove this test code
-    # return {"cry": .50,
-    #         "label": "belly_pain",
-    #         "prob": .50}
-    

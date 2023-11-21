@@ -8,6 +8,7 @@ from fastapi import File
 from tempfile import TemporaryDirectory
 from api import inference
 from api import test_wav_upload
+import numpy as np
 
 # # Initialize Tracker Service
 # tracker_service = TrackerService()
@@ -64,7 +65,7 @@ async def get_index():
 
 @app.post("/predict")
 async def predict(file: bytes = File(...)):
-    # print("predict file:", len(file), type(file))
+    print("service.py: predict file:", len(file), type(file))
     self_host_model = True
 
    # Save the audio
@@ -86,8 +87,13 @@ async def predict(file: bytes = File(...)):
             # @Adam
             prediction_results = inference.predict_vertex_ai(audio_path)
 
-    # print(prediction_results)
-    return prediction_results
+    print("service.py: prediction_results")
+    print(prediction_results)
+
+    # Fast-API won't accept numpy floats, must convert
+    converted_result = convert_numpy_floats(predicton_results)
+
+    return converted_result
 
 
 # Make sure front-end container can send user input to API 
@@ -115,3 +121,12 @@ async def dummy_outputs():
     return {"cry": 0.99,
             "label": "hungry",
             "prob": 0.98,}
+
+def convert_numpy_floats(data):
+    # Input: dictionary
+    # Output: dictionary with numpy floats converted to python floats
+    if isinstance(data, dict):
+        return {k: convert_numpy_floats(v) for k, v in data.items()}
+    elif isinstance(data, np.float32):
+        return float(data)
+    return data
