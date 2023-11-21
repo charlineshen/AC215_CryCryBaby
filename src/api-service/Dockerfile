@@ -43,7 +43,8 @@ USER app
 WORKDIR /app
 
 # Install python packages
-# ADD --chown=app:app Pipfile Pipfile.lock /app/
+# Comment out if updating pipfile.lock (?)
+ADD --chown=app:app Pipfile Pipfile.lock /app/
 
 # Only use if generating new lock file.
 # USER root
