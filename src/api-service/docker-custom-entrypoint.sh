@@ -26,3 +26,4 @@ if [ "${DEV}" = 1 ]; then
 else
   uvicorn_server_production
 fi
+

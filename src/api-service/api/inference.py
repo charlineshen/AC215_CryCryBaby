@@ -113,6 +113,12 @@ def get_prediction(model1, model2, spectrogram):
     }
 
 def predict():
+
+    # TODO remove this test code
+    return {"cry": .50,
+            "label": "belly_pain",
+            "prob": .50}
+    
     download_test_audio()
     # print("test audio downloaded...")
     spectrogram, sr, y = wav_to_spectrogram(test_audio + ".wav")
