@@ -126,7 +126,7 @@ def predict_self_host(audio_path):
 
     print("predicting...")
 
-    spectrogram = wav_to_spectrogram(audio_path)
+    spectrogram, sr, y = wav_to_spectrogram(audio_path)
 
     print("spectrogram generated...")
     

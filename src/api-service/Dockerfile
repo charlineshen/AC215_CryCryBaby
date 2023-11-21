@@ -39,7 +39,8 @@ RUN set -ex; \
 EXPOSE 9000
 
 # Switch to the new user
-USER app
+# TODO - this is not working. Need to figure out why.
+# USER app
 WORKDIR /app
 
 # Install python packages
