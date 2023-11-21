@@ -11,4 +11,4 @@ docker build --platform linux/amd64 -t $IMAGE_NAME -f Dockerfile .
 echo "Running docker container"
 
 docker run --rm --name $IMAGE_NAME -ti -p 9000:9000 --entrypoint /bin/bash\
-    -v $(pwd):/app $IMAGE_NAME \
+    -v $(pwd):/app/stuff $IMAGE_NAME \
