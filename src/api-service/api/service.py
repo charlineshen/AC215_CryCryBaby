@@ -81,10 +81,10 @@ async def predict(file: bytes = File(...)):
         # TODO: call model to make prediction
         if self_host_model:
             # @Jessica
-            prediction_results = inference.make_prediction(audio_path)
+            prediction_results = inference.predict_self_host(audio_path)
         else:
             # @Adam
-            prediction_results = inference.make_prediction_vertexai(audio_path)
+            prediction_results = inference.predict_vertex_ai(audio_path)
 
     # print(prediction_results)
     return prediction_results

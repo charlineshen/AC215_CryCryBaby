@@ -112,7 +112,7 @@ def get_prediction(model1, model2, spectrogram):
             "prob": m2_predictions[m2_predicted_label_index]
     }
 
-def predict():
+def predict_self_host():
 
     # TODO remove this test code
     return {"cry": .50,
