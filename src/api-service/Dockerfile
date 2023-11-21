@@ -46,8 +46,8 @@ WORKDIR /app
 # ADD --chown=app:app Pipfile Pipfile.lock /app/
 
 # Only use if generating new lock file.
-USER root
-RUN pipenv lock
+# USER root
+# RUN pipenv lock
 
 RUN pipenv sync
 
