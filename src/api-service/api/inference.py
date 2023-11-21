@@ -14,6 +14,15 @@ bucket_name_test_audio = "baby-cry-inference-test"
 test_audio = "theo_tired_trimmed"
 models = ["model1_v1.h5", "model2_v1.h5"]
 
+# Define a dictionary to map the index to the corresponding label
+label_map = {
+    0: 'belly_pain',
+    1: 'burp',
+    2: 'discomfort',
+    3: 'hungry',
+    4: 'tired'
+}
+
 # Take test audio from GCS bucket
 def download_test_audio():
     print("downloading test audio...")
@@ -26,6 +35,7 @@ def download_test_audio():
     blob.download_to_filename(test_audio + ".wav")
 
 def wav_to_spectrogram(file_path, output_shape=(128, 64)):
+    
     print("converting wav to spectrogram...")
     # Load the WAV file
     y, sr = librosa.load(file_path, sr=8000, dtype=np.float32)
@@ -78,19 +88,17 @@ def download_models():
 #     model = tf.keras.models.load_model(artifact_dir)
 #     return model
 
-# Define a dictionary to map the index to the corresponding label
-label_map = {
-    0: 'belly_pain',
-    1: 'burp',
-    2: 'discomfort',
-    3: 'hungry',
-    4: 'tired'
-}
+
 
 def get_prediction(model1, model2, spectrogram):
+    
+    print("getting prediction model1...")
+
     ##### Do model 1 predictions #####
     # Need the [0] because of the way it's formatted
     m1_predictions = model1.predict(spectrogram)[0]
+
+    print("getting prediction model2...")
 
     ##### Do model 2 predictions #####
     # Perform predictions using the loaded model
@@ -107,6 +115,8 @@ def get_prediction(model1, model2, spectrogram):
             "prob": m2_predictions[m2_predicted_label_index]
     })
 
+    print("prediction complete, returning values...")
+
     return {"cry": m1_predictions[1],
             "label": m2_predicted_label,
             "prob": m2_predictions[m2_predicted_label_index]
@@ -114,18 +124,28 @@ def get_prediction(model1, model2, spectrogram):
 
 def predict_self_host(audio_path):
 
-    # TODO remove this test code
-    return {"cry": .50,
-            "label": "belly_pain",
-            "prob": .50}
+    print("predicting...")
+
+    spectrogram = wav_to_spectrogram(audio_path)
+
+    print("spectrogram generated...")
     
-    download_test_audio()
-    # print("test audio downloaded...")
-    spectrogram, sr, y = wav_to_spectrogram(test_audio + ".wav")
-    # print("spectrogram generated...")
+    print("downloading models...")
+
     model1, model2 = download_models()
-    # print("models downloaded...")
-    spectrogram = np.reshape(spectrogram, (1, 128, 64))
-    # print("spectrogram reshaped...")
-    get_prediction(model1, model2, spectrogram)
-    # print("prediction complete...")
+
+    print("models downloaded...")
+    
+    print("spectrogram reshaped...")
+
+    results = get_prediction(model1, model2, spectrogram)
+
+    print("prediction complete...")
+
+    return results
+
+    # # TODO remove this test code
+    # return {"cry": .50,
+    #         "label": "belly_pain",
+    #         "prob": .50}
+    
