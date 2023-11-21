@@ -38,29 +38,6 @@ async def startup():
 async def get_index():
     return {"message": "Welcome to the API Service"}
 
-
-# @app.get("/experiments")
-# def experiments_fetch():
-#     # Fetch experiments
-#     df = pd.read_csv("/persistent/experiments/experiments.csv")
-
-#     df["id"] = df.index
-#     df = df.fillna("")
-
-#     return df.to_dict("records")
-
-
-# @app.get("/best_model")
-# async def get_best_model():
-#     model.check_model_change()
-#     if model.best_model is None:
-#         return {"message": "No model available to serve"}
-#     else:
-#         return {
-#             "message": "Current model being served:" + model.best_model["model_name"],
-#             "model_details": model.best_model,
-#         }
-
 @app.post("/predict")
 async def predict(file: bytes = File(...)):
     print("service.py: predict file:", len(file), type(file))

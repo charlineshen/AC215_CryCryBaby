@@ -1,33 +1,6 @@
 version: '3.8'
 
 services:
-  # test_api:
-  #   build: ./test_api
-  #   ports:
-  #     - "8000:8000"
-  #   volumes:
-  #     - ./test_api:/app
-  #     - ./../../secrets:/secrets
-  #     - ~/.gitconfig:/etc/gitconfig
-  #   environment:
-  #     - GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json
-  
-  # testing_test_api:
-  #   build: ./testing_test_api
-  #   ports:
-  #     - "8001:8001"
-  #   volumes:
-  #     - ./testing_test_api:/app
-  #     - ./../../secrets:/secrets
-  #     - ~/.gitconfig:/etc/gitconfig
-  #   environment:
-  #     - GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json
-  #   depends_on:
-  #     - test_api
-  #   # command: ["/bin/bash"]
-  #   # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
-  #   # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
-
   api-service:
     build: 
       context: ./api-service
@@ -65,10 +38,3 @@ services:
 networks:
   my-network-name:
     name: my-global-net
-
-    # depends_on:
-    #   - api-service
-    # if want to launch into interactive modde rather than yarn
-    # command: ["/bin/bash"]
-    # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
-    # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
