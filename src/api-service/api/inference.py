@@ -14,6 +14,11 @@ bucket_name_test_audio = "baby-cry-inference-test"
 test_audio = "theo_tired_trimmed"
 models = ["model1_v1.h5", "model2_v1.h5"]
 
+# TODO: remove this test code
+# Set the environment variable
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../../secrets/ccb.json"
+
+
 # Define a dictionary to map the index to the corresponding label
 label_map = {
     0: 'belly_pain',
@@ -49,7 +54,12 @@ def wav_to_spectrogram(file_path, output_shape=(128, 64)):
     # Normalize the spectrogram to values between 0 and 1, this really helps improve model accuracy
     spectrogram = librosa.util.normalize(spectrogram)
 
+    # Reshape the spectrogram to match the input of the model
+    spectrogram = spectrogram.reshape(1, 128, 64, 1)
+
     return spectrogram, sr, y
+
+
 
 # Get our saved model from GCP
 def download_models():
@@ -92,13 +102,13 @@ def download_models():
 
 def get_prediction(model1, model2, spectrogram):
     
-    print("getting prediction model1...")
+    print("getting prediction from model1...")
 
     ##### Do model 1 predictions #####
     # Need the [0] because of the way it's formatted
     m1_predictions = model1.predict(spectrogram)[0]
 
-    print("getting prediction model2...")
+    print("getting prediction from model2...")
 
     ##### Do model 2 predictions #####
     # Perform predictions using the loaded model
@@ -136,8 +146,6 @@ def predict_self_host(audio_path):
 
     print("models downloaded...")
     
-    print("spectrogram reshaped...")
-
     results = get_prediction(model1, model2, spectrogram)
 
     print("prediction complete...")
