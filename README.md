@@ -38,12 +38,14 @@ Project Organization
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
             │   └── model2.py
-            ├── TODO(@Jessica, Adam): api-service
+            ├── api-service
             |   ├── Dockerfile
             │   ├── Pipfile
             │   ├── Pipfile.lock
             │   ├── docker-shell.sh
-            │   └── model2.py
+            │   ├── service.py
+            │   ├── inference.py
+            │   └── download_models.py
             ├── frontend-react
             |   ├── conf
             |   ├── public
@@ -86,10 +88,10 @@ After completions of building a robust ML Pipeline in our previous milestone we 
 Before we start implementing the app we built a detailed design document outlining the application’s architecture. We built a Solution Architecture abd Technical Architecture to ensure all our components work together.
 
 Here is our Solution Architecture:
-<img src="images/solution-arch.png"  width="800">
+<img src="images/architecture/sol_archi.png"  width="800">
 
 Here is our Technical Architecture:
-<img src="images/technical-arch.png"  width="800">
+<img src="images/architecture/tech_archi.png"  width="800">
 
 
 **Backend API**
@@ -102,27 +104,32 @@ We built backend api service using fast API to expose model functionality to the
 
 A user friendly React app was built to identify baby cry and different reasons for baby cry. Using the app a user can take an audio of a baby cry and upload it. The app will send the audio to the backend api to get prediction results on the probablity the baby is crying and the reason for baby cry. 
 
-<!-- Here are some screenshots of our app:
-<img src="images/frontend-1.png"  width="800">
+Here are some screenshots of our app:
 
-<img src="images/frontend-2.png"  width="800"> -->
+Before Upload:
+![frontend0](images/frontend/frontend-0.png)
+After Upload:
+![frontend1](images/frontend/frontend-1.png)
 
-<!-- **Deployment** -->
+**Deployment**
+
+We use google cloud platform instance to hold our frontend and backend containers. We use docker compose to run the containers and deploy our frontend and backend on external IP of the GCP instance.
 
 <!-- We used Ansible to create, provision, and deploy our frontend and backend to GCP in an automated fashion. Ansible helps us manage infrastructure as code and this is very useful to keep track of our app infrastructure as code in GitHub. It helps use setup deployments in a very automated way. -->
 
-<!-- Here is our deployed app on a single VM in GCP:
-<img src="images/deployment-single-vm.png"  width="800"> -->
+Here is our deployed app on a single VM in GCP:
+<img src="images/deployed_vm.png"  width="800">
 
 
 ### Code Structure
 
 The following are the folders from the previous milestones:
 ```
+- download_from_dac
 - preprocessing
 - model1
 - model2
-- download_from_dac
+- inference
 ```
 
 **API Service Container**
@@ -142,49 +149,20 @@ To run the container locally:
 - Run `sh docker-shell.sh`
 - If running the container for the first time, run `yarn install`
 - Once inside the docker container run `yarn start`
-- Go to `http://localhost:3000` to access the app locally
+- Go to `http://localhost:3000` to access the app frontend locally
 
 
-<!-- **Deployment**
+**Deployment**
 `docker-compse.yml` is used to deploy all our app containers. The deployment is to GCP and all docker images go to GCR. 
 
-To run the container locally:
-- Open a terminal and go to the location where `awesome-app/src/deployment`
-- Run `sh docker-shell.sh`
-- Build and Push Docker Containers to GCR (Google Container Registry)
-```
-ansible-playbook deploy-docker-images.yml -i inventory.yml
-```
+To run the container pipeline on GCP VM:
+- [Login GCP, select ac215-project-400018, start the VM instance]
+- Open a GCP terminal, change directory into `/home/adamrstone/AC215_CryCryBaby/src` folder
+- Run `sudo docker compose up`
 
-- Create Compute Instance (VM) Server in GCP
-```
-ansible-playbook deploy-create-instance.yml -i inventory.yml --extra-vars cluster_state=present
-```
+Once the command runs go to `http://35.236.25.226`  
 
-- Provision Compute Instance in GCP
-Install and setup all the required things for deployment.
-```
-ansible-playbook deploy-provision-instance.yml -i inventory.yml
-```
-
-- Setup Docker Containers in the  Compute Instance
-```
-ansible-playbook deploy-setup-containers.yml -i inventory.yml
-```
-
-- Setup Webserver on the Compute Instance
-```
-ansible-playbook deploy-setup-webserver.yml -i inventory.yml
-```
-Once the command runs go to `http://<External IP>/`  -->
-
----
-
-## NOTE
-
-**DO NOT KEEP YOUR GCP INSTANCES RUNNING**
-
-Once you are done with taking screenshots for the milestone bring them down. 
+--- Archive
 
 
 
