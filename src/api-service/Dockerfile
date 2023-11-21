@@ -1,5 +1,5 @@
 # Use the official Debian-hosted Python image
-FROM --platform=linux/amd64 python:3.9-slim-buster
+FROM python:3.9-slim-buster
 
 RUN echo "Begin api-service dockerfile"
 

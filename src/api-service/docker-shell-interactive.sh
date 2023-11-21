@@ -6,7 +6,7 @@ export IMAGE_NAME="src-frontend-react"
 echo "Starting docker-shell-interactive.sh"
 
 # Build the Docker image
-docker build --platform linux/amd64 -t $IMAGE_NAME -f Dockerfile .
+docker build -t $IMAGE_NAME -f Dockerfile .
 
 echo "Running docker container"
 
