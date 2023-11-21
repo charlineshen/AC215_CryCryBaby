@@ -1,5 +1,5 @@
 # Use the official Debian-hosted Python image
-FROM python:3.9-slim-buster
+FROM --platform=linux/amd64 python:3.9-slim-buster
 
 RUN echo "Begin api-service dockerfile"
 
@@ -43,7 +43,7 @@ USER app
 WORKDIR /app
 
 # Install python packages
-ADD --chown=app:app Pipfile Pipfile.lock /app/
+# ADD --chown=app:app Pipfile Pipfile.lock /app/
 
 RUN pipenv sync
 # Add the rest of the source code. This is done last so we don't invalidate all
