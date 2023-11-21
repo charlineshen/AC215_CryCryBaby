@@ -91,7 +91,7 @@ async def predict(file: bytes = File(...)):
     print(prediction_results)
 
     # Fast-API won't accept numpy floats, must convert
-    converted_result = convert_numpy_floats(predicton_results)
+    converted_result = convert_numpy_floats(prediction_results)
 
     return converted_result
 
