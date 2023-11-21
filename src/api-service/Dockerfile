@@ -45,9 +45,12 @@ WORKDIR /app
 # Install python packages
 # ADD --chown=app:app Pipfile Pipfile.lock /app/
 
+# Only use if generating new lock file.
+USER root
+RUN pipenv lock
+USER app
 
-# RUN pipenv sync
-RUN pipenv lock # TODO revert back
+RUN pipenv sync
 
 # Add the rest of the source code. This is done last so we don't invalidate all
 # layers when we change a line of code.
