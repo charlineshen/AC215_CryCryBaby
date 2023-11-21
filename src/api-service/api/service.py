@@ -61,8 +61,6 @@ async def get_index():
 #             "model_details": model.best_model,
 #         }
 
-
-
 @app.post("/predict")
 async def predict(file: bytes = File(...)):
     print("service.py: predict file:", len(file), type(file))
@@ -74,24 +72,16 @@ async def predict(file: bytes = File(...)):
         with open(audio_path, "wb") as output:
             output.write(file)
 
-        # # Make prediction
-        # prediction_results = {"cry": 0.99,
-        #                       "label": "hungry",
-        #                       "prob": 0.98,}
-
-        # TODO: call model to make prediction
         if self_host_model:
-            # @Jessica
             prediction_results = inference.predict_self_host(audio_path)
         else:
-            # @Adam
             prediction_results = inference.predict_vertex_ai(audio_path)
 
     print("service.py: prediction_results")
     print(prediction_results)
 
-    # Fast-API won't accept numpy floats, must convert
-    converted_result = convert_numpy_floats(prediction_results)
+    # Format the results
+    converted_result = convert_and_format(prediction_results)
 
     return converted_result
 
@@ -122,11 +112,15 @@ async def dummy_outputs():
             "label": "hungry",
             "prob": 0.98,}
 
-def convert_numpy_floats(data):
-    # Input: dictionary
-    # Output: dictionary with numpy floats converted to python floats
+def format_as_percentage(value):
+    # Convert to standard Python float, multiply by 100, and round to 2 decimal places
+    return round(float(value) * 100, 2)
+
+def convert_and_format(data):
     if isinstance(data, dict):
-        return {k: convert_numpy_floats(v) for k, v in data.items()}
+        # Recursively apply conversion and formatting to each value in the dictionary
+        return {k: convert_and_format(v) for k, v in data.items()}
     elif isinstance(data, np.float32):
-        return float(data)
+        # Apply formatting to numpy.float32 values
+        return format_as_percentage(data)
     return data
