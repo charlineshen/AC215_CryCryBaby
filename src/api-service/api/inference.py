@@ -14,11 +14,6 @@ bucket_name_test_audio = "baby-cry-inference-test"
 test_audio = "theo_tired_trimmed"
 models = ["model1_v1.h5", "model2_v1.h5"]
 
-# TODO: remove this test code
-# Set the environment variable
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../../secrets/ccb.json"
-
-
 # Define a dictionary to map the index to the corresponding label
 label_map = {
     0: 'belly_pain',

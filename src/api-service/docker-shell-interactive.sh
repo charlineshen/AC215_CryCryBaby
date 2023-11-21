@@ -1,14 +1,19 @@
 #!/bin/bash
 
-# For launching into interactive mode to update pipenv lock, etc.
-# Once in terminal, run `pipenv lock` to update Pipfile.lock
-# Then run `exit` to exit the container
-# Then push the updated Pipfile.lock to git
+# Set image name
 export IMAGE_NAME="src-frontend-react"
 
 echo "Starting docker-shell-interactive.sh"
+
+# Build the Docker image
 docker build --platform linux/amd64 -t $IMAGE_NAME -f Dockerfile .
+
 echo "Running docker container"
 
-docker run --rm --name $IMAGE_NAME -ti -p 9000:9000 --entrypoint /bin/bash\
-    -v $(pwd):/app/stuff $IMAGE_NAME \
+# Run the Docker container with volume mounts and environment variable
+docker run --rm --name $IMAGE_NAME -ti -p 9000:9000 \
+    -v $(pwd):/app/stuff \
+    -v ./../../secrets:/secrets \
+    -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json \
+    --entrypoint /bin/bash $IMAGE_NAME
+

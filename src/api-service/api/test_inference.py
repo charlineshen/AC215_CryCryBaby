@@ -12,6 +12,9 @@ from tempfile import TemporaryDirectory
 # Call predict_self_host() from inference.py
 from inference import predict_self_host
 
+# Set the environment variable if running locally
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../../../secrets/ccb.json"
+
 def test_inference():
 
     # define file
