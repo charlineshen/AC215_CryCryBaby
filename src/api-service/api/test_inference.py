@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from google.cloud import storage
 from tempfile import TemporaryDirectory
+from download_models import download_models
 
 # Call predict_self_host() from inference.py
 from inference import predict_self_host
@@ -37,4 +38,6 @@ def test_inference():
 # define main function
 if __name__ == "__main__":
     print("Current Working Directory:", os.getcwd())
+    print("Downloading models...")
+    download_models()
     test_inference()

@@ -2,6 +2,18 @@
 
 echo "api-service container is running"
 
+# Run your model download script
+echo "Downloading model..."
+pipenv run python ./api/download_models.py
+
+# Check if the model download was successful
+if [ $? -ne 0 ]; then
+    echo "Model download failed, exiting..."
+    exit 1
+fi
+
+echo "Model downloaded successfully."
+
 # this will run the api/service.py file with the instantiated app FastAPI
 uvicorn_server() {
     uvicorn api.service:app --host 0.0.0.0 --port 9000 --log-level debug --reload --reload-dir api/ "$@"

@@ -123,18 +123,17 @@ def get_prediction(model1, model2, spectrogram):
 
 
 def predict_self_host(audio_path):
-    print("predicting...")
+    print("inference.py: predicting...")
 
+    print("generating spectrogram...")
     spectrogram, sr, y = wav_to_spectrogram(audio_path)
 
-    print("spectrogram generated...")
+    # Use already downloaded models
+    model1 = tf.keras.models.load_model(models[0])
+    model2 = tf.keras.models.load_model(models[1])
 
-    print("downloading models...")
-
-    model1, model2 = download_models()
-
-    print("models downloaded...")
-
+    print("models already downloaded...")
+    print("inference.py: get prediction")
     results = get_prediction(model1, model2, spectrogram)
 
     print("inference.py: prediction complete...")
