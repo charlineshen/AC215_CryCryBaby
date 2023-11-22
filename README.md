@@ -98,7 +98,9 @@ Here is our Technical Architecture:
 
 We built backend api service using fast API to expose model functionality to the frontend. We also added apis that will help the frontend display some key information about the prediction results. 
 
-<!-- <img src="images/api-list.png"  width="800"> -->
+<!-- <img src="images/docs0.png"  width="800"> -->
+<!-- <img src="images/docs1.png"  width="800"> -->
+<!-- <img src="images/docs2.png"  width="800"> -->
 
 **Frontend**
 
