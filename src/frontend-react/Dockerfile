@@ -1,7 +1,7 @@
 # Stage 1: Build the React application
 FROM node:14.15.0-alpine as build
 
-RUN echo "Begin copying files"
+RUN echo "Begin frontend-react build"
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
@@ -13,6 +13,10 @@ COPY package.json ./
 
 # Install dependencies
 RUN yarn install
+
+# Updating browserslist
+RUN echo "updating browserslist"
+RUN npx browserslist@latest --update-db
 
 # Copy the rest of your frontend-react directory into the image
 COPY . ./
