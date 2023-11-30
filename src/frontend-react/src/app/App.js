@@ -15,6 +15,8 @@ import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import DataService from '../services/DataService';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 function Copyright(props) {
   return (
@@ -41,6 +43,7 @@ export default function Pricing() {
   const [audio, setAudio] = useState(null);
   const [prediction, setPrediction] = useState({'cry': 0, 'label': ':)', 'prob': 0}); //TODO: change dummy outputs to actual outputs
   const [testUpload, setTestUpload] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // <-- New state for loading
 
 
   // Setup Component
@@ -57,6 +60,7 @@ export default function Pricing() {
     var formData = new FormData();
     formData.append("file", event.target.files[0]);
 
+    setIsLoading(true); // <-- Start loading
 
     DataService.TestUpload(formData)
         .then(function (response) {
@@ -69,6 +73,7 @@ export default function Pricing() {
         console.log(response.data);
         setPrediction(response.data);
       })
+      .finally(() => setIsLoading(false)); // <-- Stop loading when prediction is done
   }
 
 
@@ -147,6 +152,17 @@ export default function Pricing() {
         </Typography>
       </Container>
       {/* End hero unit */}
+
+      {/* Loading indicator section */}
+      {isLoading && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Waiting for model prediction
+          </Typography>
+          <CircularProgress />
+        </Box>
+      )}
+
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
@@ -219,7 +235,7 @@ export default function Pricing() {
                     {tier.buttonText}
                     <input
                       type="file"
-                      accept="*.wav"
+                      accept=".wav"
                       capture="camera"
                       autoComplete="off"
                       tabIndex="-1"
