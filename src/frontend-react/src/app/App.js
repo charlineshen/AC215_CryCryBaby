@@ -33,8 +33,21 @@ function Copyright(props) {
 
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#9BCDD2', // A soft, warm color for primary elements
+    },
+    background: {
+      default: '#FFFBEB', // A light, warm background color
+      paper: '#fce8e8', // A warmer shade for paper components
+      toolbar: '#FFABAB',
+      cardheader: '#fcc5c5',
+    },
+    // You can also adjust other color aspects of the theme as needed
+  },
+  // Include any other theme customizations here
+});
 
 export default function Pricing() {
 
@@ -130,12 +143,13 @@ export default function Pricing() {
         elevation={0}
         sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
+        <Toolbar sx={{ bgcolor: 'background.toolbar', flexWrap: 'wrap' }}>
+          <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, fontFamily: 'fantasy', fontWeight: 'bold'}}>
             Cry Cry Baby
           </Typography>
         </Toolbar>
       </AppBar>
+
       {/* Hero unit */}
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
@@ -144,10 +158,11 @@ export default function Pricing() {
           align="center"
           color="text.primary"
           gutterBottom
+          sx={{ flexGrow: 1, fontFamily: 'fantasy', fontWeight: 'bold'}}
         >
-          Cry Cry Baby
+          Cry Cry Baby 🍼
         </Typography>
-        <Typography variant="h5" align="center" color="text.secondary" component="p">
+        <Typography variant="h5" align="center" color="text.secondary" component="p" sx={{ fontFamily: 'cursive'}}>
           Empowering Parenthood: Decoding Baby Cry Through AI Guidance
         </Typography>
       </Container>
@@ -159,7 +174,7 @@ export default function Pricing() {
           <Typography variant="h6" sx={{ mb: 2 }}>
             Waiting for model prediction
           </Typography>
-          <CircularProgress />
+          <CircularProgress color='secondary'/>
         </Box>
       )}
 
@@ -184,10 +199,7 @@ export default function Pricing() {
                     align: 'center',
                   }}
                   sx={{
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? theme.palette.grey[200]
-                        : theme.palette.grey[700],
+                    bgcolor: 'background.cardheader',
                   }}
                 />
                 <CardContent>
@@ -231,7 +243,7 @@ export default function Pricing() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} onClick={() => handleImageUploadClick()}>
+                <Button fullWidth variant={tier.buttonVariant} color="secondary" onClick={() => handleImageUploadClick() }>
                     {tier.buttonText}
                     <input
                       type="file"
