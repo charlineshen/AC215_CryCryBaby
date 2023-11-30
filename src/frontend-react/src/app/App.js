@@ -40,9 +40,9 @@ const defaultTheme = createTheme({
     },
     background: {
       default: '#FFFBEB', // A light, warm background color
-      paper: '#fce8e8', // A warmer shade for paper components
-      toolbar: '#FFABAB',
-      cardheader: '#fcc5c5',
+      paper: '#faeee2', // A warmer shade for paper components
+      toolbar: '#f5d5c0',
+      cardheader: '#fadbd7',
     },
     // You can also adjust other color aspects of the theme as needed
   },
