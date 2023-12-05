@@ -1,4 +1,4 @@
-#.dev# HARDCODED 
+#.dev
 FROM node:14.9.0-buster-slim
 
 # Ensure we don't run the app as root.

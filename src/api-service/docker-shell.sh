@@ -8,7 +8,7 @@ export IMAGE_NAME="ccb-app-api-service"
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../../../secrets/
 export PERSISTENT_DIR=$(pwd)/../../../persistent-folder/
-export GCS_BUCKET_NAME="mushroom-app-models"
+export GCS_BUCKET_NAME="baby-cry-bucket"
 
 # Build the image based on the Dockerfile
 docker build -t $IMAGE_NAME -f Dockerfile .

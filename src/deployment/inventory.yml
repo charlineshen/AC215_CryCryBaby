@@ -9,7 +9,7 @@ all:
       gcp_project: "ac215-project-400018"
       gcp_region: "us-east1"
       gcp_zone: "us-east1-b"
-      docker_network_name: "appnetwork"
+      docker_network_name: "ccbnetwork"
       persistent_disk_name: "ccb-demo-persistent"
       persistent_disk_size: 50
       machine_instance_name: "ccb-demo"

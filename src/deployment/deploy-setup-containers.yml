@@ -38,7 +38,7 @@
         var: tag
     - name: Create frontend container
       docker_container:
-        name: "frontend-react"
+        name: "frontend"
         image: "gcr.io/{{ gcp_project }}/ccb-frontend-react:{{ tag.stdout}}"
         state: started
         recreate: yes
@@ -60,7 +60,7 @@
     - name: Create api-service container
       docker_container:
         name: "api-service"
-        image: "gcr.io/{{ gcp_project }}/ccb-api-service:20231203223321" #{{ tag.stdout}} # HARDCODED 
+        image: "gcr.io/{{ gcp_project }}/ccb-api-service:{{ tag.stdout}}"
         state: started
         recreate: yes
         published_ports:
