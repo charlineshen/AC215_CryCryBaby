@@ -57,6 +57,7 @@ export default function Pricing() {
   const [prediction, setPrediction] = useState({'cry': 0, 'label': ':)', 'prob': 0}); //TODO: change dummy outputs to actual outputs
   const [testUpload, setTestUpload] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // <-- New state for loading
+  const [error, setError] = useState(null); // New state for error message
 
 
   // Setup Component
@@ -74,6 +75,7 @@ export default function Pricing() {
     formData.append("file", event.target.files[0]);
 
     setIsLoading(true); // <-- Start loading
+    setError(null);
 
     DataService.TestUpload(formData)
         .then(function (response) {
@@ -82,11 +84,17 @@ export default function Pricing() {
         })
 
     DataService.Predict(formData)
-      .then(function (response) {
-        console.log(response.data);
-        setPrediction(response.data);
-      })
-      .finally(() => setIsLoading(false)); // <-- Stop loading when prediction is done
+    .then(function (response) {
+      console.log(response.data);
+      setPrediction(response.data);
+    })
+    .catch(error => {
+      // Handle error on Predict
+      console.error("Error during prediction:", error);
+      alert("Error occurred: " + error.message);
+      setError("Error during prediction: " + error.message);
+    })
+    .finally(() => setIsLoading(false)); // <-- Stop loading when prediction is done
   }
 
 
@@ -175,6 +183,15 @@ export default function Pricing() {
             Waiting for model prediction
           </Typography>
           <CircularProgress color='secondary'/>
+        </Box>
+      )}
+
+      {/* Error Message Display */}
+      {error && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 2 }}>
+          <Typography variant="h6" color="error" sx={{ mb: 2 }}>
+            {error}
+          </Typography>
         </Box>
       )}
 
