@@ -117,7 +117,11 @@
             requests:
               storage: 5Gi
     when: cluster_state == "present"
-  
+
+  - name: Delete existing Secret if present
+    shell: kubectl delete secret gcp-service-key --namespace="{{cluster_name}}-namespace"
+    ignore_errors: yes
+
   - name: Importing credentials as a Secret
     shell: |
       #!/bin/bash
@@ -130,7 +134,6 @@
     debug:
       var: create_secret_op
     when: cluster_state == "present"
-  
   - name: "Create Deployment for Frontend"
     k8s:
       state: present
@@ -280,10 +283,27 @@
           annotations:
             kubernetes.io/ingress.class: "nginx"
             nginx.ingress.kubernetes.io/ssl-redirect: "false"
-            nginx.org/rewrites: "serviceName=frontend rewrite=/;serviceName=api rewrite=/"
+            nginx.ingress.kubernetes.io/rewrite-target: /
         spec:
           rules:
-          - host: "{{ nginx_ingress_ip }}.sslip.io" # Host requires a domain and not just an IP
+          - host: "{{ nginx_ingress_ip }}.sslip.io"
+            http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: frontend
+                    port:
+                      number: 80
+              - path: /api/
+                pathType: Prefix
+                backend:
+                  service:
+                    name: api
+                    port:
+                      number: 9000
+          - host: "34.75.108.68"
             http:
               paths:
               - path: /

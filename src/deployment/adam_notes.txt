@@ -1,0 +1,36 @@
+NodePort: single cluster-wide port for accessing service.
+
+"NodePort: Provides a way to access the service from outside the Kubernetes cluster using the IP of any node in the cluster and the service's node port."
+
+Node_IP: IP address of the node. Different nodes have different Ips, but not different NodePorts.
+
+targetPort: In services, should match the containerPort in deployment. The is the "target" for the service *within* the pod, where your container is listening.
+
+containerPort: What port the container is listening to externally (on VM). In docker run 3000:80, should match the *second* value (80), which what maps to the VM port.
+
+port (means input port) (if service type is NodePort): port on which the service itself is exposed internally within the cluster. It should ideally match the targetPort for consitency.
+
+port == targetPort: consistency between internal (targetPort) and external (port) requests 
+
+
+
+-------
+
+start ansible container:
+sh docker-shell.sh 
+
+update containers:
+ansible-playbook deploy-docker-images.yml -i inventory.yml
+
+start up kubernetes:
+ansible-playbook deploy-k8s-cluster.yml -i inventory.yml --extra-vars cluster_state=present
+
+check container logs:
+kubectl logs service/frontend -n ccb-cluster-namespace
+kubectl logs service/nginx-ingress-controller -n ccb-cluster-namespace
+
+pod descriptions:
+kubectl get svc,pods -n ccb-cluster-namespace
+
+ingress description:
+kubectl get ingress -n ccb-cluster-namespace -o yaml
