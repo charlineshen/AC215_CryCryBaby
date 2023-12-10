@@ -1,5 +1,5 @@
 REM Define some environment variables
-SET IMAGE_NAME="mushroom-app-api-server"
+SET IMAGE_NAME="ccb-app-api-server"
 
 REM Build the image based on the Dockerfile
 docker build -t %IMAGE_NAME% -f Dockerfile .
