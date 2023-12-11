@@ -31,8 +31,8 @@ tag = tag.strip()
 
 print("Tag>>", tag, "<<")
 
-DATA_COLLECTOR_IMAGE = f"gcr.io/{GCP_PROJECT}/mushroom-app-data-collector:{tag}"
-DATA_PROCESSOR_IMAGE = f"gcr.io/{GCP_PROJECT}/mushroom-app-data-processor:{tag}"
+DATA_COLLECTOR_IMAGE = f"gcr.io/{GCP_PROJECT}/ccb-download_from_dac:{tag}"
+DATA_PROCESSOR_IMAGE = f"gcr.io/{GCP_PROJECT}/ccb-preprocessing:{tag}"
 
 
 def generate_uuid(length: int = 8) -> str:

@@ -37,5 +37,5 @@ ADD . /app
 # Entry point
 ENTRYPOINT ["/bin/bash"]
 
-# Get into the pipenv shell
-CMD ["-c", "pipenv shell"]
+# Run download_from_dac.py in pipenv
+CMD ["pipenv", "run", "python", "download_from_dac.py"]

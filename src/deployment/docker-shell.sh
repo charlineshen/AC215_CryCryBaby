@@ -22,7 +22,9 @@ docker run --rm --name $IMAGE_NAME -ti \
 -v "$SECRETS_DIR":/../../../secrets \
 -v "$HOME/.ssh":/home/app/.ssh \
 -v "$BASE_DIR/../api-service":/api-service \
+-v "$BASE_DIR/../preprocessing":/preprocessing \
 -v "$BASE_DIR/../frontend-react":/frontend-react \
+-v "$BASE_DIR/../download_from_dac":/download_from_dac \
 -e GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
 -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
 -e GCP_PROJECT=$GCP_PROJECT \

@@ -1,0 +1,29 @@
+---
+- name: "Build docker images and push them to GCR"
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: "Get timestamp for docker tag"
+      shell: "(date +%Y%m%d%H%M%S)"
+      register: tag
+
+    - name: Print tag
+      debug:
+        var: tag.stdout
+
+    - name: Build preprocessing container image
+      community.general.docker_image:
+        build:
+          path: "/preprocessing"
+          platform: "linux/amd64/v2"
+        name: "gcr.io/{{ gcp_project }}/ccb-preprocessing:{{ tag.stdout }}"
+        source: build
+
+    - name: Push preprocessing image to GCR
+      community.general.docker_image:
+        name: gcr.io/{{ gcp_project }}/ccb-preprocessing:{{ tag.stdout}}
+        repository: gcr.io/{{ gcp_project }}/ccb-preprocessing:{{ tag.stdout}}
+        push: yes
+        source: local
+    - name: "Save docker tag"
+      shell: echo {{ tag.stdout}} > .docker-tag

@@ -1,0 +1,278 @@
+{
+  "components": {
+    "comp-download-from-dac": {
+      "executorLabel": "exec-download-from-dac",
+      "inputDefinitions": {
+        "parameters": {
+          "download_dac_output_bucket": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
+    "comp-model1": {
+      "executorLabel": "exec-model1",
+      "inputDefinitions": {
+        "parameters": {
+          "model1_input_bucket": {
+            "parameterType": "STRING"
+          },
+          "model1_output_bucket": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
+    "comp-model2": {
+      "executorLabel": "exec-model2",
+      "inputDefinitions": {
+        "parameters": {
+          "model2_input_bucket": {
+            "parameterType": "STRING"
+          },
+          "model2_output_bucket": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    },
+    "comp-preprocessing": {
+      "executorLabel": "exec-preprocessing",
+      "inputDefinitions": {
+        "parameters": {
+          "preprocessing_input_bucket": {
+            "parameterType": "STRING"
+          },
+          "preprocessing_output_bucket": {
+            "parameterType": "STRING"
+          }
+        }
+      }
+    }
+  },
+  "deploymentSpec": {
+    "executors": {
+      "exec-download-from-dac": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "download_from_dac"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef download_from_dac(\n        download_dac_output_bucket: str,\n):\n    # In this case, the body can be left empty, as the behavior\n    # of the component is defined by the entrypoint of `my-image`.\n    pass\n\n"
+          ],
+          "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/download_from_dac:latest"
+        }
+      },
+      "exec-model1": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "model1"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef model1(\n        model1_input_bucket: str,\n        model1_output_bucket: str\n):\n    pass\n\n"
+          ],
+          "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/model1:latest"
+        }
+      },
+      "exec-model2": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "model2"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef model2(\n        model2_input_bucket: str,\n        model2_output_bucket: str\n):\n    pass\n\n"
+          ],
+          "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/model2:latest"
+        }
+      },
+      "exec-preprocessing": {
+        "container": {
+          "args": [
+            "--executor_input",
+            "{{$}}",
+            "--function_to_execute",
+            "preprocessing"
+          ],
+          "command": [
+            "sh",
+            "-c",
+            "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip || python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location 'kfp==2.3.0' '--no-deps' 'typing-extensions>=3.7.4,<5; python_version<\"3.9\"' && \"$0\" \"$@\"\n",
+            "sh",
+            "-ec",
+            "program_path=$(mktemp -d)\n\nprintf \"%s\" \"$0\" > \"$program_path/ephemeral_component.py\"\n_KFP_RUNTIME=true python3 -m kfp.dsl.executor_main                         --component_module_path                         \"$program_path/ephemeral_component.py\"                         \"$@\"\n",
+            "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import *\n\ndef preprocessing(\n        preprocessing_input_bucket: str,\n        preprocessing_output_bucket: str\n):\n    pass\n\n"
+          ],
+          "image": "us-east1-docker.pkg.dev/ac215-project-400018/ac215-crycrybaby-ar/preprocessing:latest"
+        }
+      }
+    }
+  },
+  "pipelineInfo": {
+    "description": "A pipeline to train and deploy a model to classify baby cries.",
+    "name": "ac215-crycrybaby"
+  },
+  "root": {
+    "dag": {
+      "tasks": {
+        "download-from-dac": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-download-from-dac"
+          },
+          "inputs": {
+            "parameters": {
+              "download_dac_output_bucket": {
+                "componentInputParameter": "download_dac_output_bucket"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "download-from-dac"
+          }
+        },
+        "model1": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-model1"
+          },
+          "dependentTasks": [
+            "preprocessing"
+          ],
+          "inputs": {
+            "parameters": {
+              "model1_input_bucket": {
+                "componentInputParameter": "model1_input_bucket"
+              },
+              "model1_output_bucket": {
+                "componentInputParameter": "model1_output_bucket"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "model1"
+          }
+        },
+        "model2": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-model2"
+          },
+          "dependentTasks": [
+            "model1"
+          ],
+          "inputs": {
+            "parameters": {
+              "model2_input_bucket": {
+                "componentInputParameter": "model2_input_bucket"
+              },
+              "model2_output_bucket": {
+                "componentInputParameter": "model2_output_bucket"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "model2"
+          }
+        },
+        "preprocessing": {
+          "cachingOptions": {
+            "enableCache": true
+          },
+          "componentRef": {
+            "name": "comp-preprocessing"
+          },
+          "dependentTasks": [
+            "download-from-dac"
+          ],
+          "inputs": {
+            "parameters": {
+              "preprocessing_input_bucket": {
+                "componentInputParameter": "preprocessing_input_bucket"
+              },
+              "preprocessing_output_bucket": {
+                "componentInputParameter": "preprocessing_output_bucket"
+              }
+            }
+          },
+          "taskInfo": {
+            "name": "preprocessing"
+          }
+        }
+      }
+    },
+    "inputDefinitions": {
+      "parameters": {
+        "download_dac_output_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model1_input_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model1_output_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model2_input_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "model2_output_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "preprocessing_input_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        },
+        "preprocessing_output_bucket": {
+          "defaultValue": "gs://baby-cry-bucket",
+          "isOptional": true,
+          "parameterType": "STRING"
+        }
+      }
+    }
+  },
+  "schemaVersion": "2.1.0",
+  "sdkVersion": "kfp-2.3.0"
+}
