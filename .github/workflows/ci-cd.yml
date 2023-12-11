@@ -42,10 +42,10 @@ jobs:
             -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
             -v ${{ github.workspace }}/src/api-service:/api-service \
             --volume $GITHUB_WORKSPACE:/workspace \
-            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=../../secrets/deployment.json \
-            --env =../../secrets/deployment.json \
+            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+            --env =/secrets/deployment.json \
             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-            -e GCP_PROJECT=ac215-project \
+            -e GCP_PROJECT=ac215-project-400018 \
             -e GCP_ZONE=us-east1-b \
             ccb-app-deployment sh deploy-app.sh
 #       - name: Run Data Collector
@@ -55,8 +55,8 @@ jobs:
 #             -v /var/run/docker.sock:/var/run/docker.sock \
 #             -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
 #             -v ${{ github.workspace }}/src/api-service:/api-service \
-#             -v ${{ github.workspace }}/src/data-collector:/data-collector \
-#             -v ${{ github.workspace }}/src/data-processor:/data-processor \
+#             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
+#             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
 #             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=../../secrets/deployment.json \
 #             -e GOOGLE_APPLICATION_CREDENTIALS=../../secrets/deployment.json \
 #             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
@@ -70,14 +70,14 @@ jobs:
 #       - name: Run Data Processor
 #         if: contains(github.event.head_commit.message, '/run-data-processor')
 #         run: |-
-#           docker run --rm --name mushroom-app-deployment \
+#           docker run --rm --name ccb-app-deployment \
 #             -v /var/run/docker.sock:/var/run/docker.sock \
 #             -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
 #             -v ${{ github.workspace }}/src/api-service:/api-service \
-#             -v ${{ github.workspace }}/src/data-collector:/data-collector \
-#             -v ${{ github.workspace }}/src/data-processor:/data-processor \
-#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
-#             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
+#             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
+#             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
+#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=../../secrets/deployment.json \
+#             -e GOOGLE_APPLICATION_CREDENTIALS=../../secrets/deployment.json \
 #             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
 #             -e GCP_PROJECT=ac215-project \
 #             -e GCP_ZONE=us-east1-b \
