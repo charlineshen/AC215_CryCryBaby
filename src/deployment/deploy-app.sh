@@ -1,4 +1,4 @@
-echo "Testing..."
+echo "Testing..." >> /tmp/deploy-log.txt
 
 ansible-playbook deploy-docker-images.yml -i inventory.yml -vvv
 
