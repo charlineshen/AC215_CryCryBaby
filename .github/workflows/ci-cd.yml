@@ -43,7 +43,7 @@ jobs:
             -v ${{ github.workspace }}/src/api-service:/api-service \
             --volume $GITHUB_WORKSPACE:/workspace \
             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
-            --env =/secrets/deployment.json \
+            --env GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
             -e GCP_PROJECT=ac215-project-400018 \
             -e GCP_ZONE=us-east1-b \
@@ -57,10 +57,10 @@ jobs:
 #             -v ${{ github.workspace }}/src/api-service:/api-service \
 #             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
 #             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
-#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=../../secrets/deployment.json \
-#             -e GOOGLE_APPLICATION_CREDENTIALS=../../secrets/deployment.json \
+#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+#             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
 #             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-#             -e GCP_PROJECT=ac215-project \
+#             -e GCP_PROJECT=ac215-project-400018 \
 #             -e GCP_ZONE=us-east1-b \
 # !!            -e GCS_BUCKET_NAME=ccb-app-ml-workflow-demo \
 #             -e GCS_SERVICE_ACCOUNT=ml-workflow@ac215-project.iam.gserviceaccount.com \
@@ -76,10 +76,10 @@ jobs:
 #             -v ${{ github.workspace }}/src/api-service:/api-service \
 #             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
 #             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
-#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=../../secrets/deployment.json \
-#             -e GOOGLE_APPLICATION_CREDENTIALS=../../secrets/deployment.json \
+#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+#             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
 #             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-#             -e GCP_PROJECT=ac215-project \
+#             -e GCP_PROJECT=ac215-project-400018 \
 #             -e GCP_ZONE=us-east1-b \
 #             -e GCS_BUCKET_NAME=mushroom-app-ml-workflow-demo \
 #             -e GCS_SERVICE_ACCOUNT=ml-workflow@ac215-project.iam.gserviceaccount.com \
@@ -98,7 +98,7 @@ jobs:
 #             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
 #             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
 #             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-#             -e GCP_PROJECT=ac215-project \
+#             -e GCP_PROJECT=ac215-project-400018 \
 #             -e GCP_ZONE=us-east1-b \
 #             -e GCS_BUCKET_NAME=mushroom-app-ml-workflow-demo \
 #             -e GCS_SERVICE_ACCOUNT=ml-workflow@ac215-project.iam.gserviceaccount.com \
