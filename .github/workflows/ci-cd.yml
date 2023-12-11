@@ -47,7 +47,7 @@ jobs:
             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
             -e GCP_PROJECT=ac215-project-400018 \
             -e GCP_ZONE=us-east1-b \
-            ccb-app-deployment ls
+            ccb-app-deployment sh -c "sh deploy-app.sh 2>&1"
       - name: Run download_from_dac
         if: contains(github.event.head_commit.message, '/run-download_from_dac')
         run: |-
@@ -65,7 +65,7 @@ jobs:
             -e GCS_BUCKET_NAME=baby-cry-bucket \
             -e GCS_SERVICE_ACCOUNT=deployment-630@ac215-project-400018.iam.gserviceaccount.com \
             -e GCP_REGION=us-east1 \
-            ccb-app-deployment sh run-data-collector.sh
+            ccb-app-deployment sh run-download_from_dacr.sh
       - name: Run Data Processor
         if: contains(github.event.head_commit.message, '/run-data-processor')
         run: |-
