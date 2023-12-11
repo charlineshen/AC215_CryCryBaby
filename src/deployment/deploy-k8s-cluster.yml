@@ -303,21 +303,4 @@
                     name: api
                     port:
                       number: 9000
-          - host: "34.75.108.68"
-            http:
-              paths:
-              - path: /
-                pathType: Prefix
-                backend:
-                  service:
-                    name: frontend
-                    port:
-                      number: 80
-              - path: /api/
-                pathType: Prefix
-                backend:
-                  service:
-                    name: api
-                    port:
-                      number: 9000
     when: cluster_state == "present"
