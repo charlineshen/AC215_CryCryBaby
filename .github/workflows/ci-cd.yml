@@ -47,9 +47,7 @@ jobs:
             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
             -e GCP_PROJECT=ac215-project-400018 \
             -e GCP_ZONE=us-east1-b \
-            ccb-app-deployment sh -c "sh deploy-app.sh" > container_logs.txt 2>&1
-      - name: Display Container Logs
-        run: cat container_logs.txt
+            ccb-app-deployment sh deploy-app.sh
       # - name: Run download_from_dac
       #   if: contains(github.event.head_commit.message, '/run-download_from_dac')
       #   run: |-
