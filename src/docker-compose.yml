@@ -22,7 +22,7 @@ services:
   frontend-react:
     build:
       context: ./frontend-react
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     image: src-frontend-react
     ports:
       - "80:80" # NGINX

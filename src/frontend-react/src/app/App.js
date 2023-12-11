@@ -49,7 +49,7 @@ const defaultTheme = createTheme({
   // Include any other theme customizations here
 });
 
-export default function Pricing() {
+export default function Display() {
 
   const inputFile = useRef(null);
   // Component States
@@ -59,6 +59,8 @@ export default function Pricing() {
   const [isLoading, setIsLoading] = useState(false); // <-- New state for loading
   const [error, setError] = useState(null); // New state for error message
 
+  const noAudioUploadedPlaceholder = "No audio uploaded";
+  const noCryDetectedPlaceholder = "Audio uploaded but no cry detected";
 
   // Setup Component
   useEffect(() => {
@@ -101,7 +103,7 @@ export default function Pricing() {
   const tiers = [
     {
       title: 'Audio Upload',
-      price: '',
+      prob: '',
       pre_description: [
         'Let me hear the baby cry',
         '.',
@@ -115,11 +117,11 @@ export default function Pricing() {
       title: 'Cry Detection',
       // subheader: 'Most popular',
       pre_description: [
-        'This is',
+        audio ? 'Analyzing audio...' : noAudioUploadedPlaceholder,
       ],
-      price: prediction['cry']+'%',
+      prob: audio ? `${prediction['cry']}%` : '---',
       post_description: [
-        'chance is a cry',
+        audio ? 'chance is a cry' : '',
       ],
       // buttonText: 'Get started',
       // buttonVariant: 'contained',
@@ -127,14 +129,11 @@ export default function Pricing() {
     {
       title: 'Needs classification',
       pre_description: [
-        'Your baby seems '+prediction['prob']+'%',
-        // '30 GB of storage',
-        // 'Help center access',
-        // 'Phone & email support',
+        audio ? (prediction['cry'] > 50 ? 'Analyzing needs...' : noCryDetectedPlaceholder) : noAudioUploadedPlaceholder,
       ],
-      price: prediction['label'],
+      prob: audio && prediction['cry'] > 50 ? prediction['label'] : '---',
       post_description: [
-        'based on our model',
+        audio && prediction['cry'] > 50 ? 'based on our model' : '',
       ],
       // buttonText: 'Contact us',
       // buttonVariant: 'outlined',
@@ -241,7 +240,7 @@ export default function Pricing() {
                     }}
                   >
                     <Typography component="h2" variant="h3" color="text.primary">
-                      {tier.price}
+                      {tier.prob}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                     </Typography>

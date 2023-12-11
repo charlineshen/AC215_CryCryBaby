@@ -1,57 +1,31 @@
-# Previous in Dockerfile --> worked with docker-compose.yml in VM`
-# Stage 1: Build the React application
-FROM node:14.15.0-alpine as build
+#.dev
+FROM node:14.9.0-buster-slim
 
-RUN echo "Begin frontend-react build"
+# Ensure we don't run the app as root.
+RUN set -ex; \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends openssl && \
+    useradd -ms /bin/bash app -d /home/app -G sudo -u 2000 -p "$(openssl passwd -1 Passw0rd)" && \
+    mkdir -p /app && \
+    chown app:app /app
+
+EXPOSE 3000
 
 WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
-ENV PUBLIC_URL /
 
-# Copy package.json and yarn.lock
-COPY package.json ./
-# COPY yarn.lock ./
+# Switch to the new user
+USER app
 
-# Install dependencies
+# Copy package.json and yarn.lock, install dependencies
+COPY --chown=app:app package.json yarn.lock ./
 RUN yarn install
 
-# Updating browserslist
-RUN echo "updating browserslist"
-RUN npx browserslist@latest --update-db
+# Copy the rest of your app's source code
+COPY --chown=app:app . .
 
-# Copy the rest of your frontend-react directory into the image
-COPY . ./
+# Expose port 3000 for the development server
+EXPOSE 3000
 
-RUN echo "starting yard run build"
-
-# Build the React application
-RUN yarn run build
-
-RUN echo "finished yard run build"
-
-# Stage 2: Serve the app using Nginx
-
-FROM nginx:stable
-
-RUN echo "found nginx"
-
-# Copy the NGINX configuration file
-COPY ./conf/nginx/nginx.conf /etc/nginx/nginx.conf
-
-# Copy the built app from the first stage into Nginx's serving directory
-COPY --from=build /app/build /usr/share/nginx/html
-COPY ./docker-custom-entrypoint.sh ./docker-custom-entrypoint.sh
-
-RUN echo "copied build"
-
-# Expose port 80 for Nginx
-EXPOSE 80
-
-RUN echo "adding entrypoint"
-
-# Start shell into container
-ENTRYPOINT ["/bin/bash","./docker-custom-entrypoint.sh"]
-
-# Inlcuded in docker-entrypoint.sh
-# # Start Nginx
-# CMD ["nginx", "-g", "daemon off;"]
+# Start the development server
+CMD ["yarn", "start"]
