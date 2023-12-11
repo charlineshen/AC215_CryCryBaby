@@ -34,3 +34,7 @@ kubectl get svc,pods -n ccb-cluster-namespace
 
 ingress description:
 kubectl get ingress -n ccb-cluster-namespace -o yaml
+
+
+
+!!!
