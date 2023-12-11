@@ -163,16 +163,15 @@ ansible-playbook deploy-k8s-cluster.yml -i inventory.yml --extra-vars cluster_st
 * Run `python cli.py --pipeline`, run the entire ML pipeline in Vertex AI -->
 
 
-<!-- ### Deploy using GitHub Actions
+ ### Deploy using GitHub Actions
 
 Finally we added CI/CD using GitHub Actions, such that we can trigger deployment or any other pipeline using GitHub Events. Our yaml files can be found under `.github/workflows`
 
-`cicdworkflow.yml` - Brief description here
+`ci-cd.yml` - We have a GitHub Action that will build and deploy a new version of the app when a git commit has a comment /run-deploy-app
 
 We implemented a CI/CD workflow to use the deployment container to 
 * Invoke docker image building and pushing to GCR on code changes
 * Deploy the changed containers to update the k8s cluster
-* Run Vertex AI jobs if needed -->
 
 
 ## NOTE
