@@ -47,45 +47,43 @@ jobs:
             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
             -e GCP_PROJECT=ac215-project-400018 \
             -e GCP_ZONE=us-east1-b \
-            ccb-app-deployment sh deploy-app.sh
-#       - name: Run Data Collector
-#         if: contains(github.event.head_commit.message, '/run-data-collector')
-#         run: |-
-#           docker run --rm --name ccb-app-deployment \
-#             -v /var/run/docker.sock:/var/run/docker.sock \
-#             -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
-#             -v ${{ github.workspace }}/src/api-service:/api-service \
-#             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
-#             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
-#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
-#             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
-#             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-#             -e GCP_PROJECT=ac215-project-400018 \
-#             -e GCP_ZONE=us-east1-b \
-# !!            -e GCS_BUCKET_NAME=ccb-app-ml-workflow-demo \
-#             -e GCS_SERVICE_ACCOUNT=ml-workflow@ac215-project.iam.gserviceaccount.com \
-#             -e GCP_REGION=us-central1 \
-# !!            -e GCS_PACKAGE_URI=gs://mushroom-app-trainer-code \
-#             mushroom-app-deployment sh run-data-collector.sh
-#       - name: Run Data Processor
-#         if: contains(github.event.head_commit.message, '/run-data-processor')
-#         run: |-
-#           docker run --rm --name ccb-app-deployment \
-#             -v /var/run/docker.sock:/var/run/docker.sock \
-#             -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
-#             -v ${{ github.workspace }}/src/api-service:/api-service \
-#             -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
-#             -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
-#             --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
-#             -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
-#             -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
-#             -e GCP_PROJECT=ac215-project-400018 \
-#             -e GCP_ZONE=us-east1-b \
-#             -e GCS_BUCKET_NAME=mushroom-app-ml-workflow-demo \
-#             -e GCS_SERVICE_ACCOUNT=ml-workflow@ac215-project.iam.gserviceaccount.com \
-#             -e GCP_REGION=us-central1 \
-#             -e GCS_PACKAGE_URI=gs://mushroom-app-trainer-code \
-#             mushroom-app-deployment sh run-data-processor.sh
+            ccb-app-deployment ls
+      - name: Run download_from_dac
+        if: contains(github.event.head_commit.message, '/run-download_from_dac')
+        run: |-
+          docker run --rm --name ccb-app-deployment \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
+            -v ${{ github.workspace }}/src/api-service:/api-service \
+            -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
+            -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
+            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+            -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
+            -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
+            -e GCP_PROJECT=ac215-project-400018 \
+            -e GCP_ZONE=us-east1-b \
+            -e GCS_BUCKET_NAME=baby-cry-bucket \
+            -e GCS_SERVICE_ACCOUNT=deployment-630@ac215-project-400018.iam.gserviceaccount.com \
+            -e GCP_REGION=us-east1 \
+            ccb-app-deployment sh run-data-collector.sh
+      - name: Run Data Processor
+        if: contains(github.event.head_commit.message, '/run-data-processor')
+        run: |-
+          docker run --rm --name ccb-app-deployment \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v ${{ github.workspace }}/src/frontend-react:/frontend-react \
+            -v ${{ github.workspace }}/src/api-service:/api-service \
+            -v ${{ github.workspace }}/src/download_from_dac:/download_from_dac \
+            -v ${{ github.workspace }}/src/preprocessing:/preprocessing \
+            --mount type=bind,source=$GOOGLE_APPLICATION_CREDENTIALS,target=/secrets/deployment.json \
+            -e GOOGLE_APPLICATION_CREDENTIALS=/secrets/deployment.json \
+            -e USE_GKE_GCLOUD_AUTH_PLUGIN=True \
+            -e GCP_PROJECT=ac215-project-400018 \
+            -e GCP_ZONE=us-east1-b \
+            -e GCS_BUCKET_NAME=baby-cry-bucket \
+            -e GCS_SERVICE_ACCOUNT=deployment-630@ac215-project-400018.iam.gserviceaccount.com \
+            -e GCP_REGION=us-east1 \
+            ccb-app-deployment sh run-data-processor.sh
 #       - name: Run ML Pipeline
 #         if: contains(github.event.head_commit.message, '/run-ml-pipeline')
 #         run: |-
