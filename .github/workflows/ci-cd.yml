@@ -2,7 +2,7 @@ name: Continuous Integration and Continuous Deployment
 run-name: ${{ github.actor }} submitted a CI CD Action
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "milestone6" ]
 
 jobs:
   Explore-GitHub-Actions:
