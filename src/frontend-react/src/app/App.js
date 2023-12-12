@@ -22,8 +22,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://github.com/charlineshen/AC215_CryCryBaby">
-        CCB Team
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -49,7 +49,7 @@ const defaultTheme = createTheme({
   // Include any other theme customizations here
 });
 
-export default function Display() {
+export default function Pricing() {
 
   const inputFile = useRef(null);
   // Component States
@@ -59,8 +59,6 @@ export default function Display() {
   const [isLoading, setIsLoading] = useState(false); // <-- New state for loading
   const [error, setError] = useState(null); // New state for error message
 
-  const noAudioUploadedPlaceholder = "No audio uploaded";
-  const noCryDetectedPlaceholder = "Audio uploaded but no cry detected";
 
   // Setup Component
   useEffect(() => {
@@ -103,38 +101,43 @@ export default function Display() {
   const tiers = [
     {
       title: 'Audio Upload',
+      price: '',
       pre_description: [
         'Let me hear the baby cry',
         '.',
         'Upload filepath: ' + testUpload,
       ],
-      prob: '',
       post_description:[],
       buttonText: 'Upload',
       buttonVariant: 'outlined',
     },
     {
       title: 'Cry Detection',
+      // subheader: 'Most popular',
       pre_description: [
-        audio ? 'Analyzing audio...' : noAudioUploadedPlaceholder,
+        'This is',
       ],
-      // Directly display the probability if audio is uploaded and prediction exists
-      prob: audio ? `${prediction.cry}%` : '---', // Changed from prediction['cry'] to prediction.cry for consistency
+      price: prediction['cry']+'%',
       post_description: [
-        audio ? 'Chance is a cry' : '',
+        'chance is a cry',
       ],
+      // buttonText: 'Get started',
+      // buttonVariant: 'contained',
     },
     {
       title: 'Needs classification',
-      // Simplified the logic to check if audio is uploaded and the cry probability is more than 50
       pre_description: [
-        audio && prediction.cry > 50 ? 'Analyzing needs...' : noCryDetectedPlaceholder,
+        'Your baby seems '+prediction['prob']+'%',
+        // '30 GB of storage',
+        // 'Help center access',
+        // 'Phone & email support',
       ],
-      // Display the label if conditions are met
-      prob: audio && prediction.cry > 50 ? prediction.label : '---',
+      price: prediction['label'],
       post_description: [
-        audio && prediction.cry > 50 ? 'Based on our model' : '',
+        'based on our model',
       ],
+      // buttonText: 'Contact us',
+      // buttonVariant: 'outlined',
     },
   ];
   
@@ -238,7 +241,7 @@ export default function Display() {
                     }}
                   >
                     <Typography component="h2" variant="h3" color="text.primary">
-                      {tier.prob}
+                      {tier.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                     </Typography>
