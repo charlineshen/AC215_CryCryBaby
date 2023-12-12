@@ -1,7 +1,7 @@
 
 
 Current Goal:
--- Show that pipeline ML triggers successfully. 
+-- Show that deployment works. 
 
 Current Step: 
 Test the container in 
