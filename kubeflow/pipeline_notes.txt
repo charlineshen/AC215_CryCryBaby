@@ -1,8 +1,7 @@
 
 
 Current Goal:
--- running *similar* docker-shell-ml to ci/cd. 
--- 
+-- Show that pipeline ML triggers successfully. 
 
 Current Step: 
 Test the container in 
