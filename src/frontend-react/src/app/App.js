@@ -103,40 +103,38 @@ export default function Display() {
   const tiers = [
     {
       title: 'Audio Upload',
-      prob: '',
       pre_description: [
         'Let me hear the baby cry',
         '.',
         'Upload filepath: ' + testUpload,
       ],
+      prob: '',
       post_description:[],
       buttonText: 'Upload',
       buttonVariant: 'outlined',
     },
     {
       title: 'Cry Detection',
-      // subheader: 'Most popular',
       pre_description: [
         audio ? 'Analyzing audio...' : noAudioUploadedPlaceholder,
       ],
-      prob: audio ? `${prediction['cry']}%` : '---',
+      // Directly display the probability if audio is uploaded and prediction exists
+      prob: audio ? `${prediction.cry}%` : '---', // Changed from prediction['cry'] to prediction.cry for consistency
       post_description: [
-        audio ? 'chance is a cry' : '',
+        audio ? 'Chance is a cry' : '',
       ],
-      // buttonText: 'Get started',
-      // buttonVariant: 'contained',
     },
     {
       title: 'Needs classification',
+      // Simplified the logic to check if audio is uploaded and the cry probability is more than 50
       pre_description: [
-        audio ? (prediction['cry'] > 50 ? 'Analyzing needs...' : noCryDetectedPlaceholder) : noAudioUploadedPlaceholder,
+        audio && prediction.cry > 50 ? 'Analyzing needs...' : noCryDetectedPlaceholder,
       ],
-      prob: audio && prediction['cry'] > 50 ? prediction['label'] : '---',
+      // Display the label if conditions are met
+      prob: audio && prediction.cry > 50 ? prediction.label : '---',
       post_description: [
-        audio && prediction['cry'] > 50 ? 'based on our model' : '',
+        audio && prediction.cry > 50 ? 'Based on our model' : '',
       ],
-      // buttonText: 'Contact us',
-      // buttonVariant: 'outlined',
     },
   ];
   
