@@ -7,70 +7,148 @@ AC215 - Cry Cry Baby🍼
 *  \<Link Here>
 ---
 
-?? kubeflow folder.
-?? Run ML Tasks in Vertex AI
-
 Project Organization
 ------------
-      ├── LICENSE
-      ├── README.md
-      └── notebooks
-            ├── crycrybaby_poc_cleaned.ipynb
-            ├── crycrybaby_poc_wandb.ipynb
-            ├── model2.ipynb
-            ├── model1.ipynb
-      └── src
-            ├── download_from_dac
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   └── download_from_dac.py
-            ├── preprocessing
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   └── preprocessing.py
-            ├── model1
-            │   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   └── model1.py
-            ├── model2
-            |   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   └── model2.py
-            ├── api-service
-            |   ├── Dockerfile
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── docker-shell.sh
-            │   ├── service.py
-            │   ├── inference.py
-            │   └── download_models.py
-            ├── frontend-react
-            |   ├── conf
-            |   ├── public
-            |   ├── src
-            |   |   ├── app
-            |   |   ├── services
-            |   |   ├── index.css
-            |   |   ├── index.js
-            |   ├── .env.development
-            |   ├── .env.production
-            │   ├── Pipfile
-            │   ├── Pipfile.lock
-            │   ├── package-lock.json
-            │   ├── package.json
-            │   ├── yarn.lock
-            │   ├── docker-shell.sh
-            │   ├── Dockerfile
-            │   └── Dockerfile.dev
-  
+├── LICENSE
+├── Pipfile
+├── README.md
+├── images
+│   ├── architecture
+│   │   ├── sol_archi.png
+│   │   └── tech_archi.png
+│   ├── deployed_vm.png
+│   ├── docs0.png
+│   ├── docs1.png
+│   ├── docs2.png
+│   ├── frontend
+│   │   ├── frontend-1.png
+│   │   └── frontend-2.png
+│   ├── k8s.png
+│   ├── pruning
+│   │   ├── after_acc.jpg
+│   │   ├── after_space.jpg
+│   │   ├── after_zeros.jpg
+│   │   ├── before_acc.jpg
+│   │   ├── before_space.jpg
+│   │   └── before_zeros.jpg
+│   └── wandb.png
+├── notebooks
+│   ├── crycrybaby_poc_cleaned.ipynb
+│   ├── crycrybaby_poc_wandb.ipynb
+│   ├── model1.ipynb
+│   └── model2.ipynb
+└── src
+    ├── api-service
+    │   ├── Dockerfile
+    │   ├── Pipfile
+    │   ├── Pipfile.lock
+    │   ├── api
+    │   │   ├── download_models.py
+    │   │   ├── inference.py
+    │   │   ├── service.py
+    │   │   ├── test_cry.wav
+    │   │   ├── test_inference.py
+    │   │   └── test_wav_upload.py
+    │   ├── docker-custom-entrypoint.sh
+    │   ├── docker-shell-interactive.sh
+    │   ├── docker-shell.bat
+    │   ├── docker-shell.sh
+    │   ├── model1_v1.h5
+    │   └── model2_v1.h5
+    ├── deployment
+    │   ├── Dockerfile
+    │   ├── Dockerfile.dev
+    │   ├── Pipfile
+    │   ├── Pipfile.lock
+    │   ├── adam_notes.txt
+    │   ├── cli.py
+    │   ├── deploy-app.sh
+    │   ├── deploy-create-instance.yml
+    │   ├── deploy-docker-images-ml.yml
+    │   ├── deploy-docker-images.yml
+    │   ├── deploy-k8s-cluster.yml
+    │   ├── deploy-provision-instance.yml
+    │   ├── deploy-setup-containers.yml
+    │   ├── deploy-setup-webserver.yml
+    │   ├── docker-entrypoint.sh
+    │   ├── docker-shell-ml.sh
+    │   ├── docker-shell.bat
+    │   ├── docker-shell.sh
+    │   ├── inventory-prod.yml
+    │   ├── inventory.yml
+    │   ├── nginx-conf
+    │   │   └── nginx
+    │   │       └── nginx.conf
+    │   ├── run-ml-pipeline.sh
+    │   └── update-k8s-cluster.yml
+    ├── docker-compose.yml
+    ├── download_from_dac
+    │   ├── Dockerfile
+    │   ├── Pipfile
+    │   ├── Pipfile.lock
+    │   ├── cli.py
+    │   ├── docker-entrypoint.sh
+    │   ├── docker-shell-ml.sh
+    │   ├── docker-shell.sh
+    │   └── download_from_dac.py
+    ├── frontend-react
+    │   ├── Dockerfile
+    │   ├── Dockerfile.dev
+    │   ├── conf
+    │   │   ├── default.conf
+    │   │   └── nginx
+    │   │       └── nginx.conf
+    │   ├── docker-custom-entrypoint.sh
+    │   ├── docker-shell-prod.sh
+    │   ├── docker-shell.bat
+    │   ├── docker-shell.sh
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── public
+    │   │   ├── favicon.ico
+    │   │   ├── index.html
+    │   │   └── manifest.json
+    │   ├── src
+    │   │   ├── app
+    │   │   │   └── App.js
+    │   │   ├── images
+    │   │   │   └── img.jpg
+    │   │   ├── index.css
+    │   │   ├── index.js
+    │   │   └── services
+    │   │       ├── Common.js
+    │   │       └── DataService.js
+    │   └── yarn.lock
+    ├── model1
+    │   ├── Dockerfile
+    │   ├── Pipfile
+    │   ├── Pipfile.lock
+    │   ├── cli.py
+    │   ├── docker-entrypoint.sh
+    │   ├── docker-shell-ml.sh
+    │   ├── docker-shell.sh
+    │   └── model1.py
+    ├── model2
+    │   ├── Dockerfile
+    │   ├── Pipfile
+    │   ├── Pipfile.lock
+    │   ├── cli.py
+    │   ├── docker-entrypoint.sh
+    │   ├── docker-shell-ml.sh
+    │   ├── docker-shell.sh
+    │   └── model2.py
+    └── preprocessing
+        ├── Dockerfile
+        ├── Pipfile
+        ├── Pipfile.lock
+        ├── cli.py
+        ├── docker-entrypoint.sh
+        ├── docker-shell-ml.sh
+        ├── docker-shell.sh
+        └── preprocessing.py
+
+24 directories, 114 files
+.  
 # AC215 - Final Project
 
 **Team Members**
@@ -179,4 +257,3 @@ We implemented a CI/CD workflow to use the deployment container to
 **DO NOT KEEP YOUR GCP INSTANCES RUNNING**
 
 Once you are done with taking screenshots for the milestone bring them down. 
-
