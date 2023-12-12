@@ -22,8 +22,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/charlineshen/AC215_CryCryBaby">
+        CCB Team
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -49,95 +49,84 @@ const defaultTheme = createTheme({
   // Include any other theme customizations here
 });
 
-export default function Pricing() {
+export default function Display() {
 
   const inputFile = useRef(null);
   // Component States
   const [audio, setAudio] = useState(null);
-  const [prediction, setPrediction] = useState({'cry': 0, 'label': ':)', 'prob': 0}); //TODO: change dummy outputs to actual outputs
+  const [prediction, setPrediction] = useState({'cry': 0, 'label': ':)', 'prob': 0}); 
   const [testUpload, setTestUpload] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // <-- New state for loading
   const [error, setError] = useState(null); // New state for error message
 
+  const noAudioUploadedPlaceholder = "No audio uploaded";
+  const noCryDetectedPlaceholder = "Audio uploaded but no cry detected";
 
   // Setup Component
   useEffect(() => {
   }, []);
-  // Handlers
-  const handleImageUploadClick = () => {
-    inputFile.current.click();
-  }
-  const handleOnChange = (event) => {
-    console.log(event.target.files);
-    setAudio(URL.createObjectURL(event.target.files[0]));
+  
+  const handleFileUploadAndPrediction = (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
 
-    var formData = new FormData();
-    formData.append("file", event.target.files[0]);
-
-    setIsLoading(true); // <-- Start loading
+    setIsLoading(true);
     setError(null);
 
     DataService.TestUpload(formData)
-        .then(function (response) {
-            console.log(response.data);
-            setTestUpload(response.data);
-        })
+      .then(response => {
+        console.log("TestUpload Response:", response.data);
+        setTestUpload(response.data);
+      });
 
     DataService.Predict(formData)
-    .then(function (response) {
-      console.log(response.data);
-      setPrediction(response.data);
-    })
-    .catch(error => {
-      // Handle error on Predict
-      console.error("Error during prediction:", error);
-      alert("Error occurred: " + error.message);
-      setError("Error during prediction: " + error.message);
-    })
-    .finally(() => setIsLoading(false)); // <-- Stop loading when prediction is done
-  }
-
+      .then(response => {
+        console.log("Prediction Response:", response.data);
+        setPrediction(response.data);
+      })
+      .catch(error => {
+        console.error("Error during prediction:", error);
+        alert("Error occurred: " + error.message);
+        setError("Error during prediction: " + error.message);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   const tiers = [
     {
       title: 'Audio Upload',
-      price: '',
       pre_description: [
         'Let me hear the baby cry',
         '.',
         'Upload filepath: ' + testUpload,
       ],
+      prob: '',
       post_description:[],
       buttonText: 'Upload',
       buttonVariant: 'outlined',
     },
     {
       title: 'Cry Detection',
-      // subheader: 'Most popular',
       pre_description: [
-        'This is',
+        audio ? 'Analyzing audio...' : noAudioUploadedPlaceholder,
       ],
-      price: prediction['cry']+'%',
+      // Directly display the probability if audio is uploaded and prediction exists
+      prob: audio ? `${prediction.cry}%` : '---', // Changed from prediction['cry'] to prediction.cry for consistency
       post_description: [
-        'chance is a cry',
+        audio ? 'Chance is a cry' : '',
       ],
-      // buttonText: 'Get started',
-      // buttonVariant: 'contained',
     },
     {
       title: 'Needs classification',
+      // Simplified the logic to check if audio is uploaded and the cry probability is more than 50
       pre_description: [
-        'Your baby seems '+prediction['prob']+'%',
-        // '30 GB of storage',
-        // 'Help center access',
-        // 'Phone & email support',
+        audio && prediction.cry > 50 ? 'Analyzing needs...' : noCryDetectedPlaceholder,
       ],
-      price: prediction['label'],
+      // Display the label if conditions are met
+      prob: audio && prediction.cry > 50 ? prediction.label : '---',
       post_description: [
-        'based on our model',
+        audio && prediction.cry > 50 ? 'Based on our model' : '',
       ],
-      // buttonText: 'Contact us',
-      // buttonVariant: 'outlined',
     },
   ];
   
@@ -241,7 +230,7 @@ export default function Pricing() {
                     }}
                   >
                     <Typography component="h2" variant="h3" color="text.primary">
-                      {tier.price}
+                      {tier.prob}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                     </Typography>
