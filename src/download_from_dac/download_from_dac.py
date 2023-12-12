@@ -18,7 +18,7 @@ def makedirs():
     os.makedirs(output_folder, exist_ok=True)
 
     for label in labels:
-        os.makedirs(output_folder+'/'+ label, exist_ok=True)
+        os.makedirs(output_folder+'/'+ label, exist_ok=True)     
 
 # Download data from donate-a-cry dataset
 def download_donate_corpus():
@@ -31,6 +31,7 @@ def download_donate_corpus():
     # Define the path to the cloned repository
     repo_path = "donateacry-corpus"
 
+    print("Walking through donate-a-cry data...")
     # Walk through the directory structure to find WAV files and their folders
     for root, dirs, files in os.walk(repo_path):
         for file in files:
@@ -62,17 +63,17 @@ def download_crema_d():
 def get_dac():
     print("Getting donate-a-cry data...")
     download_donate_corpus()
-    print("Getting ESC50 data...")
-    download_esc50()
+    # print("Getting ESC50 data...")
+    # download_esc50()
     # print("Getting CREMA-D data...")
     # download_crema_d()
     
-
 def upload_donate_corpus():
     # Initialize the GCS client
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
 
+    print("Uploading donate-a-cry data...")
     for i in range(len(wav_files)):
         spct_file = wav_files[i]
         label = folder_names[i]
@@ -144,8 +145,8 @@ def upload_crema_d():
 def upload():
     print("Uploading donate-a-cry...")
     upload_donate_corpus()
-    print("Uploading ESC 50...")
-    upload_esc50()
+    # print("Uploading ESC 50...")
+    # upload_esc50()
     # print("Uploading CREMA-D...")
     # upload_crema_d()
     print("Upload finished!")

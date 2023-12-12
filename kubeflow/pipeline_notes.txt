@@ -1,9 +1,11 @@
 
 
 Current Goal:
--- Ensure that the images are taken from the same place they are taken from elsin the deploy-k8s-cluster.
+-- running *similar* docker-shell-ml to ci/cd. 
+-- 
 
 Current Step: 
+Test the container in 
 Change preprocessing container to operate *successfully* on vertexAI.
 
 Next step:
@@ -31,15 +33,16 @@ If /run- :
 Build
 Run Deploy App
 deploy container: docker-entrypoint.sh
-deploy container: deploy-app.sh
+deploy container: deploy-app.sh (from docker run def)
+deploy container: Ansible deploy images
+deploy container: Ansible update k8s.
 
 If /run-ml-pipeline: 
 
-
 deploy container: docker-entrypoint.sh
-deploy container: cli.py
+deploy conatiner: run-ml-pipeline.sh (from docker run def)
+deploy container: cli.py (from docker run def)
 
-deploy container: Ansible deploy images
-deploy container: Ansible update k8s.
+
 
 

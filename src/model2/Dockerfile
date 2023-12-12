@@ -2,7 +2,8 @@
 FROM python:3.8-slim-buster
 
 # JZ: update credential
-ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+# Can't be used with vertex AI
+# ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
 
 # Ensure we have an up to date baseline, install dependencies 
 RUN set -ex; \
@@ -27,9 +28,5 @@ RUN pipenv sync
 # Source code
 ADD . /app
 
-# Run script (avoid creating shell)
-ENTRYPOINT ["pipenv", "run", "python"]
-CMD ["model2.py"]
-
-# Use docker run -it <image_name> /bin/bash to create interactive session for development
-
+# Entry point
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]

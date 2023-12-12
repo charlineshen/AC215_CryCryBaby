@@ -1,6 +1,0 @@
-outs:
-- md5: bf7376686402ef1c537cc67c01ddaef8.dir
-  size: 786880
-  nfiles: 3
-  hash: md5
-  path: output_data_augmentation

@@ -7,7 +7,10 @@ ENV PYENV_SHELL=/bin/bash
 
 # JZ: update credential
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+# ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+
+# Create the 'app' user
+RUN useradd -m app
 
 # Ensure we have an up to date baseline, install dependencies 
 RUN set -ex; \
@@ -27,7 +30,7 @@ RUN set -ex; \
 WORKDIR /app
 
 # Add Pipfile, Pipfile.lock
-ADD Pipfile Pipfile.lock /app/
+ADD --chown=app:app Pipfile Pipfile.lock /app/
 
 RUN pipenv sync
 
@@ -35,7 +38,4 @@ RUN pipenv sync
 ADD . /app
 
 # Entry point
-ENTRYPOINT ["/bin/bash"]
-
-# Run download_from_dac.py in pipenv
-CMD ["pipenv", "run", "python", "download_from_dac.py"]
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]

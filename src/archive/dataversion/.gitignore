@@ -1,5 +1,0 @@
-# misc
-.DS_Store
-/docker-volumes
-/input_spectrogram
-/output_data_augmentation

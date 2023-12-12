@@ -7,7 +7,8 @@ ENV PYENV_SHELL=/bin/bash
 
 # JZ: update credential
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
+# Can't use for vertex AI
+# ENV GOOGLE_APPLICATION_CREDENTIALS=../../../secrets/ccb.json
 
 # Ensure we have an up to date baseline, install dependencies 
 RUN set -ex; \
@@ -35,7 +36,4 @@ RUN pipenv sync
 ADD . /app
 
 # Entry point
-ENTRYPOINT ["/bin/bash"]
-
-# Get into the pipenv shell
-CMD ["-c", "pipenv shell"]
+ENTRYPOINT ["/bin/bash","./docker-entrypoint.sh"]

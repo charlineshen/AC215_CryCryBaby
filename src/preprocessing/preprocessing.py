@@ -45,7 +45,7 @@ def download():
             if blob.name.endswith(".wav"):
                 # JZ note: to update
                 blob.download_to_filename("/app/" + input_folder +"/" + blob.name[len(folder_name):])
-
+        print("loaded: " + folder_name +label+"/")
 
 
 def wav_to_spectrogram(input_path, output_shape=(128, 64)):

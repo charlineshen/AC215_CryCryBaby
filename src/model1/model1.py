@@ -10,8 +10,6 @@ from tensorflow.keras import layers, models
 import tensorflow as tf
 
 
-# print(sklearn.__version__)
-
 ## upload secrets to GCP & pull from there in code
 
 gcp_project = "ac215-project"
@@ -54,18 +52,6 @@ def load_data():
 
 def model1(X, y):
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.10, random_state=215)
-    # def shuffle_split_data(X, y):
-    #     np.random.seed(103)
-    #     arr_rand = np.random.rand(X.shape[0])
-    #     split = arr_rand < np.percentile(arr_rand, 80)
-
-    #     X_train = X[split]
-    #     y_train = y[split]
-    #     X_test = X[~split]
-    #     y_test = y[~split]
-
-    #     return X_train, X_test, y_train, y_test
-    # X_train, X_test, y_train, y_test = shuffle_split_data(X, y)
 
     # Create the model
     num_classes = len(np.unique(y_train))
@@ -106,9 +92,8 @@ def model1(X, y):
     accuracy = accuracy_score(y_test_classes, y_pred_classes)
     print(f'Test accuracy: {accuracy:.2f}')
 
-    # TODO: why was app used?
-    # model.save("/app/" + output_folder + "/" + "model1_v1_vai.h5")
-    model.save(output_folder + "/" + "model1_v1_vai.h5")
+    # Save the model    
+    model.save(output_folder + "/" + "model1_v1.h5")
 
     return
 
