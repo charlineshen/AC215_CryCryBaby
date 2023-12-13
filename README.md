@@ -236,13 +236,7 @@ ansible-playbook deploy-k8s-cluster.yml -i inventory.yml --extra-vars cluster_st
 * Copy the `nginx_ingress_ip` from the terminal from the create cluster command
 * Go to `http://34.75.108.68.sslip.io/` 🍼🍼🍼
 
-<!-- - ?? Run ML Tasks in Vertex AI ??
-* Run `python cli.py --data_collector`, run just the data collector on Vertex AI
-* Run `python cli.py --data_processor`, run just the data processor on Vertex AI
-* Run `python cli.py --pipeline`, run the entire ML pipeline in Vertex AI -->
-
-
- ### Deploy using GitHub Actions
+### Deploy App using GitHub Actions
 
 Finally we added CI/CD using GitHub Actions, such that we can trigger deployment or any other pipeline using GitHub Events. Our yaml files can be found under `.github/workflows`
 
@@ -252,4 +246,10 @@ We implemented a CI/CD workflow to use the deployment container to
 * Invoke docker image building and pushing to GCR on code changes
 * Deploy the changed containers to update the k8s cluster
 
+### Automate Model Training on VertexAI with GitHub Actions
+We also use Github Actions to automate training our model on VertexAI in response to new data, preprocessing methods, and model architecture and hyperparameters when a git commit has a comment /run-ml-pipeline. 
 
+The automated ML pipeline workflow uses the deployment container to 
+* Invoke docker image building and pushing to GCR on the model training containers 
+* Build kubeflow pipeline and submits the job to VertexAI
+* Update the resulting model1 and model2 files in the GCR available the API container.
