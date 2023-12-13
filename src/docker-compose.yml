@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api-service:
+    build: 
+      context: ./api-service
+      dockerfile: Dockerfile
+    image: src-api-service
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./api-service:/app
+      - ./../../secrets:/secrets
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/ccb.json
+    networks:
+      - my-network-name
+  #   # command: ["/bin/bash"]
+  #   # stdin_open: true   # Keep STDIN open (equivalent to -i in docker run)
+  #   # tty: true          # Allocate a pseudo-TTY (equivalent to -t in docker run)
+    
+  frontend-react:
+    build:
+      context: ./frontend-react
+      dockerfile: Dockerfile
+    image: src-frontend-react
+    ports:
+      - "80:80" # NGINX
+    #volumes:
+    #  - ./frontend-react:/app 
+    environment:
+      - PUBLIC_URL=/
+    networks:
+      - my-network-name
+    depends_on:
+      - api-service
+  
+networks:
+  my-network-name:
+    name: my-global-net

@@ -1,0 +1,22 @@
+all:
+    vars:
+      ansible_user: sa_107634508015071473868
+      ansible_ssh_private_key_file: "../../../secrets/ssh-key-deployment"
+      gcp_service_account_file: "../../../secrets/deployment.json"
+      gcp_service_account_email: "deployment-630@ac215-project-400018.iam.gserviceaccount.com"
+      gcp_auth_kind: "serviceaccount"
+      gcp_scopes: "https://www.googleapis.com/auth/compute"
+      gcp_project: "ac215-project-400018"
+      gcp_region: "us-east1"
+      gcp_zone: "us-east1-b"
+      docker_network_name: "ccbnetwork"
+      persistent_disk_name: "ccb-demo-persistent"
+      persistent_disk_size: 50
+      machine_instance_name: "ccb-demo"
+      machine_type: "e2-medium"
+      machine_disk_size: 50
+
+    children:
+        appserver:
+            hosts:
+                35.243.139.140:

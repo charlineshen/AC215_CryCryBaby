@@ -1,0 +1,27 @@
+# Node modules
+node_modules
+
+# Build output
+/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directory for editor configurations
+.idea
+.vscode
+
+# Dependency directories
+bower_components
+.jekyll-metadata
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Optional: add any other files/directories that should be ignored by Docker
+# e.g., .git, .gitignore, README.md, etc.
